@@ -870,14 +870,7 @@ $seoSchemas = [
         loop: true, autoplay: { delay: 5000, disableOnInteraction: false },
         pagination: { el: '.hero-pagination', clickable: true },
         navigation: { nextEl: '.hero-next', prevEl: '.hero-prev' },
-        effect: 'fade', fadeEffect: { crossFade: true },
-        touchStartPreventDefault: false,
-        touchMoveStopPropagation: false,
-        passiveListeners: true,
-        breakpoints: {
-            0: { allowTouchMove: false },
-            992: { allowTouchMove: true }
-        }
+        effect: 'fade', fadeEffect: { crossFade: true }
     });
     new Swiper('.packages-swiper', {
         loop: true, slidesPerView: 1, spaceBetween: 24,
