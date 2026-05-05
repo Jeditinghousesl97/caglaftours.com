@@ -46,7 +46,7 @@ $badgeClass  = ['popular' => 'badge-popular', 'bestseller' => 'badge-bestseller'
 $difficulty  = ucfirst($pkg['difficulty'] ?? 'Moderate');
 $rating      = $pkg['rating'] ? number_format((float)$pkg['rating'], 1) : null;
 $reviewCount = (int)($pkg['review_count'] ?? 0);
-$seoTitle = $title . ' | Nayagara Tours Sri Lanka';
+$seoTitle = $title . ' | CAGLAF Tours Sri Lanka';
 $seoDesc = $title . ', ' . ($pkg['duration'] ? $pkg['duration'] . ' Sri Lanka tour.' : 'Sri Lanka tour package.') . ($price ? ' From $' . $price . ' per person.' : '');
 $seoCanonical = absolute_site_url('pages/package-detail.php?slug=' . rawurlencode($slug));
 $seoImage = 'assets/images/logo.png';
@@ -104,7 +104,7 @@ if (!empty($itineraryItems)) {
         'canonical' => $seoCanonical,
         'image' => $seoImage,
         'type' => 'product',
-        'site_name' => $cfg('site_name', 'Nayagara Tours'),
+        'site_name' => $cfg('site_name', 'CAGLAF Tours'),
         'structured_data' => [[
             '@context' => 'https://schema.org',
             '@type' => 'TouristTrip',

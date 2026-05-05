@@ -1,11 +1,11 @@
--- Nayagara Tours - Database Schema
--- Database: nayagara_tours
+-- CAGLAF Tours - Database Schema
+-- Database: caglaf_tours
 
-CREATE DATABASE IF NOT EXISTS nayagara_tours
+CREATE DATABASE IF NOT EXISTS caglaf_tours
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE nayagara_tours;
+USE caglaf_tours;
 
 
 -- 1. Admin Users
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS admin_users (
 
 -- Default admin (username: admin / password: Admin@1234 — change after first login)
 INSERT INTO admin_users (name, username, email, password, role) VALUES
-('Super Admin', 'admin', 'admin@nayagaratours.com',
+('Super Admin', 'admin', 'admin@caglaftours.com',
  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'super_admin');
 
 
@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS settings (
 ) ENGINE=InnoDB;
 
 INSERT INTO settings (`key`, `value`) VALUES
-('site_name',          'Nayagara Tours'),
-('site_tagline',       'Sri Lanka Travel'),
+('site_name',          'CAGLAF Tours'),
+('site_tagline',       'Come as a guest - Leave as a friend.'),
 ('site_logo',          ''),
 ('theme_primary',      '#0077B6'),
 ('theme_primary_dark', '#005F92'),
@@ -61,7 +61,7 @@ INSERT INTO settings (`key`, `value`) VALUES
 ('social_youtube',     ''),
 ('social_tripadvisor', ''),
 ('google_maps_embed',  ''),
-('meta_description',   'Nayagara Tours Sri Lanka - handcrafted tour packages for every traveller.');
+('meta_description',   'CAGLAF Tours Sri Lanka - handcrafted tour packages for every traveller.');
 
 
 

@@ -6,8 +6,8 @@ if (file_exists(__DIR__ . '/../maintenance.flag')) { include __DIR__ . '/../main
 
 $s   = $pdo->query("SELECT `key`, `value` FROM settings")->fetchAll(PDO::FETCH_KEY_PAIR);
 $cfg = fn(string $key, string $default = '') => (isset($s[$key]) && $s[$key] !== '') ? $s[$key] : $default;
-$seoTitle = 'Privacy Policy | Nayagara Tours Sri Lanka';
-$seoDesc = 'Privacy Policy for Nayagara Tours Sri Lanka. Learn how we collect, use, and protect your personal information.';
+$seoTitle = 'Privacy Policy | CAGLAF Tours Sri Lanka';
+$seoDesc = 'Privacy Policy for CAGLAF Tours Sri Lanka. Learn how we collect, use, and protect your personal information.';
 $seoCanonical = absolute_site_url('pages/privacy-policy.php');
 ?>
 <!DOCTYPE html>
@@ -23,7 +23,7 @@ $seoCanonical = absolute_site_url('pages/privacy-policy.php');
         'canonical' => $seoCanonical,
         'image' => 'assets/images/logo.png',
         'type' => 'website',
-        'site_name' => $cfg('site_name', 'Nayagara Tours'),
+        'site_name' => $cfg('site_name', 'CAGLAF Tours'),
     ]); ?>
     <title><?= htmlspecialchars($seoTitle) ?></title>
 
@@ -82,7 +82,7 @@ $seoCanonical = absolute_site_url('pages/privacy-policy.php');
 
     <div class="policy-body">
 
-        <p>Welcome to <strong>Nayagara Tours</strong>. We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.</p>
+        <p>Welcome to <strong>CAGLAF Tours</strong>. We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.</p>
 
         <h2>1. Information We Collect</h2>
         <p>We may collect personal information that you voluntarily provide to us when you:</p>
@@ -114,7 +114,7 @@ $seoCanonical = absolute_site_url('pages/privacy-policy.php');
         <p>Our website uses cookies to enhance your browsing experience. For full details, please see our <a href="cookie-policy.php">Cookie Policy</a>.</p>
 
         <h2>6. Your Rights</h2>
-        <p>You have the right to access, correct, or delete the personal information we hold about you. To exercise any of these rights, please contact us at <a href="mailto:<?= htmlspecialchars($cfg('contact_email', 'info@nayagaratours.lk')) ?>"><?= htmlspecialchars($cfg('contact_email', 'info@nayagaratours.lk')) ?></a>.</p>
+        <p>You have the right to access, correct, or delete the personal information we hold about you. To exercise any of these rights, please contact us at <a href="mailto:<?= htmlspecialchars($cfg('contact_email', 'info@caglaftours.com')) ?>"><?= htmlspecialchars($cfg('contact_email', 'info@caglaftours.com')) ?></a>.</p>
 
         <h2>7. Third-Party Links</h2>
         <p>Our website may contain links to third-party websites. We are not responsible for the privacy practices of those sites and encourage you to review their privacy policies.</p>
@@ -125,7 +125,7 @@ $seoCanonical = absolute_site_url('pages/privacy-policy.php');
         <h2>9. Contact Us</h2>
         <p>If you have any questions about this Privacy Policy, please contact us:</p>
         <ul>
-            <li><strong>Email:</strong> <a href="mailto:<?= htmlspecialchars($cfg('contact_email', 'info@nayagaratours.lk')) ?>"><?= htmlspecialchars($cfg('contact_email', 'info@nayagaratours.lk')) ?></a></li>
+            <li><strong>Email:</strong> <a href="mailto:<?= htmlspecialchars($cfg('contact_email', 'info@caglaftours.com')) ?>"><?= htmlspecialchars($cfg('contact_email', 'info@caglaftours.com')) ?></a></li>
             <li><strong>Phone:</strong> <?= htmlspecialchars($cfg('contact_phone', '+94 11 234 5678')) ?></li>
             <li><strong>Address:</strong> <?= htmlspecialchars($cfg('contact_address', 'No. 15, Galle Road, Colombo 03, Sri Lanka')) ?></li>
         </ul>

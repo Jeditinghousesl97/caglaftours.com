@@ -1,13 +1,13 @@
 <?php
 // ADMIN_URL is defined per-page before including this file
-// e.g. define('ADMIN_URL', '/nayagara-tours/admin');
+// e.g. define('ADMIN_URL', '/caglaf-tours/admin');
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><?= htmlspecialchars($pageTitle ?? 'Admin') ?> | Nayagara Tours</title>
+  <title><?= htmlspecialchars($pageTitle ?? 'Admin') ?> | CAGLAF Tours</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -25,7 +25,7 @@
   <button class="btn btn-link text-white sidebar-toggle" id="sidebarToggle">
     <i class="bi bi-list fs-4"></i>
   </button>
-  <span class="navbar-brand mb-0 fw-semibold">Nayagara Tours | Admin</span>
+  <span class="navbar-brand mb-0 fw-semibold">CAGLAF Tours | Admin</span>
   <div class="ms-auto d-flex align-items-center gap-3">
     <span class="text-white-50 small">
       <i class="bi bi-person-circle me-1"></i>

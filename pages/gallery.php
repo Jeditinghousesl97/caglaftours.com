@@ -55,15 +55,15 @@ $staticImages = [
     ['image_path'=>'../assets/images/hero/slide-3.jpg',              'title'=>'Sri Lanka Coastal Paradise',               'category'=>'beach',       'layout'=>''],
     ['image_path'=>'../assets/images/gallery/gallery-1.jpg',         'title'=>'Sri Lanka Cultural Heritage',              'category'=>'cultural',    'layout'=>''],
     ['image_path'=>'../assets/images/hero/slide-1.jpg',              'title'=>'Sri Lanka Natural Wonders',                'category'=>'wildlife',    'layout'=>'wide'],
-    ['image_path'=>'../assets/images/destinations/sigiriya.jpg',     'title'=>'Your Nayagara Tours Team',                 'category'=>'honeymoon',   'layout'=>''],
+    ['image_path'=>'../assets/images/destinations/sigiriya.jpg',     'title'=>'Your CAGLAF Tours Team',                 'category'=>'honeymoon',   'layout'=>''],
 ];
 
 $displayImages = $useStatic ? $staticImages : $images;
 
 // Assign layout classes for DB items in a repeating pattern
 $layoutPattern = ['tall','wide','','','wide','','','tall','wide','',''];
-$seoTitle = 'Photo Gallery | Nayagara Tours Sri Lanka';
-$seoDesc = 'Nayagara Tours Sri Lanka Photo Gallery, Beaches, Cultural Sites, Wildlife Safaris, Hill Country & more. Browse stunning moments from our tours.';
+$seoTitle = 'Photo Gallery | CAGLAF Tours Sri Lanka';
+$seoDesc = 'CAGLAF Tours Sri Lanka Photo Gallery, Beaches, Cultural Sites, Wildlife Safaris, Hill Country & more. Browse stunning moments from our tours.';
 $seoCanonical = absolute_site_url('pages/gallery.php');
 $seoImage = 'assets/images/logo.png';
 ?>
@@ -80,11 +80,11 @@ $seoImage = 'assets/images/logo.png';
         'canonical' => $seoCanonical,
         'image' => $seoImage,
         'type' => 'website',
-        'site_name' => $cfg('site_name', 'Nayagara Tours'),
+        'site_name' => $cfg('site_name', 'CAGLAF Tours'),
         'structured_data' => [[
             '@context' => 'https://schema.org',
             '@type' => 'ImageGallery',
-            'name' => 'Nayagara Tours Sri Lanka Photo Gallery',
+            'name' => 'CAGLAF Tours Sri Lanka Photo Gallery',
             'url' => $seoCanonical,
             'description' => $seoDesc,
         ]],
@@ -276,7 +276,7 @@ $seoImage = 'assets/images/logo.png';
             <div data-aos="fade-up">
                 <span class="section-tag light">Ready to Explore?</span>
                 <h2 style="margin-top:12px;">Create Your Own <span>Memories</span></h2>
-                <p>Every photo in this gallery was taken by a real traveler on a Nayagara Tours journey. Your story starts here.</p>
+                <p>Every photo in this gallery was taken by a real traveler on a CAGLAF Tours journey. Your story starts here.</p>
                 <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
                     <a href="packages.php" class="btn btn-primary">
                         <i class="fa-solid fa-compass"></i> Browse Packages

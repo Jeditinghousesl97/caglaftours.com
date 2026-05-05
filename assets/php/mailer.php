@@ -14,7 +14,7 @@ function nt_mail_config_from_settings(array $settings): array
         'username' => trim((string)($settings['smtp_username'] ?? '')),
         'password' => (string)($settings['smtp_password'] ?? ''),
         'encryption' => strtolower(trim((string)($settings['smtp_encryption'] ?? 'tls'))),
-        'from_name' => trim((string)($settings['smtp_from_name'] ?? 'Nayagara Tours')),
+        'from_name' => trim((string)($settings['smtp_from_name'] ?? 'CAGLAF Tours')),
         'from_email' => trim((string)($settings['smtp_from_email'] ?? '')),
         'notify_email' => trim((string)($settings['smtp_notify_email'] ?? '')),
     ];
@@ -185,7 +185,7 @@ function nt_build_mime_message(array $config, array $to, ?array $replyTo, string
 
     $headers[] = 'Subject: ' . nt_encode_header($subject);
     $headers[] = 'Message-ID: ' . $messageId;
-    $headers[] = 'X-Mailer: Nayagara Tours Website Mailer';
+    $headers[] = 'X-Mailer: CAGLAF Tours Website Mailer';
     $headers[] = 'MIME-Version: 1.0';
     $headers[] = 'Content-Type: multipart/alternative; boundary="' . $boundary . '"';
 

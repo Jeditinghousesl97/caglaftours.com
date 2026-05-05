@@ -33,8 +33,8 @@ $badgeLabel = ['popular'=>'Popular','bestseller'=>'Best Seller','new'=>'New',
                'limited'=>'Limited','hotdeal'=>'Hot Deal'];
 
 $total = count($packages);
-$seoTitle = 'Tour Packages | Nayagara Tours Sri Lanka';
-$seoDesc = 'Nayagara Tours Sri Lanka Packages, Cultural, Beach, Wildlife, Hill Country & Honeymoon packages. Book your perfect Sri Lanka tour today.';
+$seoTitle = 'Tour Packages | CAGLAF Tours Sri Lanka';
+$seoDesc = 'CAGLAF Tours Sri Lanka Packages, Cultural, Beach, Wildlife, Hill Country & Honeymoon packages. Book your perfect Sri Lanka tour today.';
 $seoCanonical = absolute_site_url('pages/packages.php');
 $seoImage = 'assets/images/logo.png';
 ?>
@@ -51,7 +51,7 @@ $seoImage = 'assets/images/logo.png';
         'canonical' => $seoCanonical,
         'image' => $seoImage,
         'type' => 'website',
-        'site_name' => $cfg('site_name', 'Nayagara Tours'),
+        'site_name' => $cfg('site_name', 'CAGLAF Tours'),
         'structured_data' => [[
             '@context' => 'https://schema.org',
             '@type' => 'CollectionPage',

@@ -69,7 +69,7 @@ $staticFeatured = [
     'published_at' => '2026-03-15',
     'content'      => str_repeat('word ', 2400), // ~12 min
     'author'       => 'Dinesh Kumara',
-    'author_role'  => 'Head of Travel, Nayagara Tours',
+    'author_role'  => 'Head of Travel, CAGLAF Tours',
     'author_init'  => 'DK',
     'views'        => '8,420',
 ];
@@ -84,8 +84,8 @@ $staticPosts = [
     ['title'=>'Best Time to Visit Sri Lanka: A Month-by-Month Weather Guide','slug'=>null,'excerpt'=>'Sri Lanka has two monsoon seasons affecting different coasts. Here\'s exactly when to visit each region.','cover_image'=>'../assets/images/destinations/kandy.jpg','category'=>'tips','published_at'=>'2025-11-25','content'=>str_repeat('word ',1400),'views'=>'8,300'],
     ['title'=>'Ella, Sri Lanka: Complete Guide to the Island\'s Most Charming Hill Town','slug'=>null,'excerpt'=>'Nine Arches Bridge, Ella Rock hike, Little Adam\'s Peak, tea factory tours, and the freshest air in Sri Lanka.','cover_image'=>'../assets/images/destinations/ella.jpg','category'=>'destinations','published_at'=>'2025-11-10','content'=>str_repeat('word ',1800),'views'=>'6,100'],
 ];
-$seoTitle = 'Travel Blog | Nayagara Tours Sri Lanka';
-$seoDesc = $cfg('blog_meta_desc','Nayagara Tours Sri Lanka Blog, Travel tips, destination guides, food culture, visa planning, and honeymoon ideas for your perfect Sri Lanka trip.');
+$seoTitle = 'Travel Blog | CAGLAF Tours Sri Lanka';
+$seoDesc = $cfg('blog_meta_desc','CAGLAF Tours Sri Lanka Blog, Travel tips, destination guides, food culture, visa planning, and honeymoon ideas for your perfect Sri Lanka trip.');
 $seoCanonical = absolute_site_url('pages/blog.php' . (($activeCat !== 'all' || $page > 1) ? ('?' . http_build_query(array_filter(['cat' => $activeCat === 'all' ? null : $activeCat, 'page' => $page > 1 ? $page : null]))) : ''));
 $seoImage = 'assets/images/logo.png';
 ?>
@@ -102,11 +102,11 @@ $seoImage = 'assets/images/logo.png';
         'canonical' => $seoCanonical,
         'image' => $seoImage,
         'type' => 'website',
-        'site_name' => $cfg('site_name', 'Nayagara Tours'),
+        'site_name' => $cfg('site_name', 'CAGLAF Tours'),
         'structured_data' => [[
             '@context' => 'https://schema.org',
             '@type' => 'Blog',
-            'name' => 'Nayagara Tours Travel Blog',
+            'name' => 'CAGLAF Tours Travel Blog',
             'url' => $seoCanonical,
             'description' => $seoDesc,
         ]],
@@ -183,7 +183,7 @@ $seoImage = 'assets/images/logo.png';
                             <div class="author-avatar">DK</div>
                             <div class="author-info">
                                 <span class="author-name">Dinesh Kumara</span>
-                                <span class="author-role">Head of Travel, Nayagara Tours</span>
+                                <span class="author-role">Head of Travel, CAGLAF Tours</span>
                             </div>
                         </div>
                         <a href="blog-detail.php" class="read-more-btn">
@@ -226,8 +226,8 @@ $seoImage = 'assets/images/logo.png';
                         <div class="blog-author">
                             <div class="author-avatar"><?= $fInitials ?></div>
                             <div class="author-info">
-                                <span class="author-name"><?= htmlspecialchars($cfg('about_company_name','Nayagara Tours')) ?></span>
-                                <span class="author-role">Nayagara Tours Team</span>
+                                <span class="author-name"><?= htmlspecialchars($cfg('about_company_name','CAGLAF Tours')) ?></span>
+                                <span class="author-role">CAGLAF Tours Team</span>
                             </div>
                         </div>
                         <a href="blog-detail.php?slug=<?= urlencode($featuredPost['slug']) ?>" class="read-more-btn">

@@ -19,8 +19,8 @@ if (isset($pdo)) {
 }
 ?>
     <meta name="site-logo" content="<?= htmlspecialchars(public_asset_url($cfg('site_logo', ''))) ?>">
-    <meta name="site-name" content="<?= htmlspecialchars($cfg('site_name', 'Nayagara Tours')) ?>">
-    <meta name="site-tagline" content="<?= htmlspecialchars($cfg('site_tagline', 'Sri Lanka Travel')) ?>">
+    <meta name="site-name" content="<?= htmlspecialchars($cfg('site_name', 'CAGLAF Tours')) ?>">
+    <meta name="site-tagline" content="<?= htmlspecialchars($cfg('site_tagline', 'Come as a guest - Leave as a friend.')) ?>">
     <meta name="wa-number" content="<?= preg_replace('/\D/', '', $cfg('contact_whatsapp', '')) ?>">
     <meta name="site-phone" content="<?= htmlspecialchars($cfg('contact_phone', '')) ?>">
     <meta name="site-email" content="<?= htmlspecialchars($cfg('contact_email', '')) ?>">

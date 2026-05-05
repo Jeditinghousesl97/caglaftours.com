@@ -85,7 +85,7 @@ if (empty($slides)) {
         [
             'image'   => site_url('assets/images/hero/slide-3.jpg'),
             'heading' => 'Manage With Ease',
-            'subtext' => 'Your powerful dashboard for Nayagara Tours',
+            'subtext' => 'Your powerful dashboard for CAGLAF Tours',
         ],
     ];
 }
@@ -104,7 +104,7 @@ $hp       = round($slotSec * 100 / $totalSec);        // hidden-start %
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Login | Nayagara Tours</title>
+  <title>Admin Login | CAGLAF Tours</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
   <?php if ($turnstileEnabled): ?>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -562,13 +562,13 @@ $hp       = round($slotSec * 100 / $totalSec);        // hidden-start %
     <div class="slide-brand">
       <?php if ($hasLogo): ?>
         <div class="slide-brand-icon" style="overflow:hidden;padding:4px;">
-          <img src="<?= htmlspecialchars($logoUrl) ?>" alt="Nayagara Tours"
+          <img src="<?= htmlspecialchars($logoUrl) ?>" alt="CAGLAF Tours"
                style="height:26px;max-width:26px;object-fit:contain;display:block;">
         </div>
       <?php else: ?>
         <div class="slide-brand-icon"><i class="bi bi-compass"></i></div>
       <?php endif; ?>
-      <div class="slide-brand-text" style="color:#00B4D8;">Nayagara Tours</div>
+      <div class="slide-brand-text" style="color:#00B4D8;">CAGLAF Tours</div>
     </div>
 
     <!-- Error toast on the image side -->
@@ -622,7 +622,7 @@ $hp       = round($slotSec * 100 / $totalSec);        // hidden-start %
     <!-- Feature pills -->
     <div class="slide-features">
       <div class="feature-pill"><i class="bi bi-shield-check"></i> Secure Login</div>
-      <div class="feature-pill"><i class="bi bi-globe"></i> Sri Lanka Travel</div>
+      <div class="feature-pill"><i class="bi bi-globe"></i> Come as a guest - Leave as a friend.</div>
       <div class="feature-pill"><i class="bi bi-gear"></i> Full Control</div>
     </div>
 
@@ -654,11 +654,11 @@ $hp       = round($slotSec * 100 / $totalSec);        // hidden-start %
       <!-- Logo -->
       <div class="login-logo-wrap">
         <?php if ($hasLogo): ?>
-          <img src="<?= $logoUrl ?>" alt="Nayagara Tours" class="login-logo-img" />
+          <img src="<?= $logoUrl ?>" alt="CAGLAF Tours" class="login-logo-img" />
         <?php else: ?>
           <div class="login-logo-icon"><i class="bi bi-compass"></i></div>
           <div>
-            <div style="font-weight:800;font-size:1.05rem;color:#03045E;line-height:1.1;">Nayagara Tours</div>
+            <div style="font-weight:800;font-size:1.05rem;color:#03045E;line-height:1.1;">CAGLAF Tours</div>
             <div style="font-size:.75rem;color:#718096;">Admin Panel</div>
           </div>
         <?php endif; ?>
@@ -720,7 +720,7 @@ $hp       = round($slotSec * 100 / $totalSec);        // hidden-start %
 
       <div class="login-note">
         <i class="bi bi-shield-lock-fill"></i>
-        Secured admin area &mdash; Nayagara Tours
+        Secured admin area &mdash; CAGLAF Tours
       </div>
 
     </div>

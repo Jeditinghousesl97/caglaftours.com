@@ -20,4 +20,4 @@ Allow: /assets/css/
 Allow: /assets/js/
 Allow: /assets/images/
 
-Sitemap: https://nayagaratours.com/sitemap.xml
+Sitemap: https://caglaftours.com/sitemap.xml

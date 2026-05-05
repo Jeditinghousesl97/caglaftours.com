@@ -29,6 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         yearEl.textContent = new Date().getFullYear();
     }
 
-    console.log('%cNayagara Tours — Site loaded successfully ✓',
+    console.log('%cCAGLAF Tours — Site loaded successfully ✓',
         'color:#0077B6; font-size:13px; font-weight:600;');
 });

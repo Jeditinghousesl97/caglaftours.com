@@ -6,8 +6,8 @@ if (file_exists(__DIR__ . '/../maintenance.flag')) { include __DIR__ . '/../main
 
 $s   = $pdo->query("SELECT `key`, `value` FROM settings")->fetchAll(PDO::FETCH_KEY_PAIR);
 $cfg = fn(string $key, string $default = '') => (isset($s[$key]) && $s[$key] !== '') ? $s[$key] : $default;
-$seoTitle = 'Terms of Service | Nayagara Tours Sri Lanka';
-$seoDesc = 'Terms of Service for Nayagara Tours Sri Lanka. Read our booking terms, cancellation policy, and conditions of travel.';
+$seoTitle = 'Terms of Service | CAGLAF Tours Sri Lanka';
+$seoDesc = 'Terms of Service for CAGLAF Tours Sri Lanka. Read our booking terms, cancellation policy, and conditions of travel.';
 $seoCanonical = absolute_site_url('pages/terms-of-service.php');
 ?>
 <!DOCTYPE html>
@@ -23,7 +23,7 @@ $seoCanonical = absolute_site_url('pages/terms-of-service.php');
         'canonical' => $seoCanonical,
         'image' => 'assets/images/logo.png',
         'type' => 'website',
-        'site_name' => $cfg('site_name', 'Nayagara Tours'),
+        'site_name' => $cfg('site_name', 'CAGLAF Tours'),
     ]); ?>
     <title><?= htmlspecialchars($seoTitle) ?></title>
 
@@ -82,10 +82,10 @@ $seoCanonical = absolute_site_url('pages/terms-of-service.php');
 
     <div class="policy-body">
 
-        <p>These Terms of Service govern your use of the Nayagara Tours website and the booking of our travel services. By accessing our website or making a booking, you agree to be bound by these terms. Please read them carefully before proceeding.</p>
+        <p>These Terms of Service govern your use of the CAGLAF Tours website and the booking of our travel services. By accessing our website or making a booking, you agree to be bound by these terms. Please read them carefully before proceeding.</p>
 
         <h2>1. About Us</h2>
-        <p>Nayagara Tours is a licensed travel company based in Sri Lanka, specialising in tailor-made tours, holiday packages, and travel services across the island. Our registered office is at <?= htmlspecialchars($cfg('contact_address', 'No. 15, Galle Road, Colombo 03, Sri Lanka')) ?>.</p>
+        <p>CAGLAF Tours is a licensed travel company based in Sri Lanka, specialising in tailor-made tours, holiday packages, and travel services across the island. Our registered office is at <?= htmlspecialchars($cfg('contact_address', 'No. 15, Galle Road, Colombo 03, Sri Lanka')) ?>.</p>
 
         <h2>2. Bookings and Reservations</h2>
         <p>A booking is confirmed once you receive a written confirmation from us and have paid the required deposit. We reserve the right to decline any booking at our discretion. All bookings are subject to availability at the time of confirmation.</p>
@@ -111,7 +111,7 @@ $seoCanonical = absolute_site_url('pages/terms-of-service.php');
         <p>If you wish to amend your booking after confirmation, we will do our best to accommodate your request. Amendment fees may apply depending on the nature of the change and the suppliers involved.</p>
 
         <h2>6. Travel Insurance</h2>
-        <p>We strongly recommend that all travellers obtain comprehensive travel insurance prior to departure, covering cancellation, medical emergencies, personal accident, and loss of baggage. Nayagara Tours is not liable for any costs arising from events covered by travel insurance.</p>
+        <p>We strongly recommend that all travellers obtain comprehensive travel insurance prior to departure, covering cancellation, medical emergencies, personal accident, and loss of baggage. CAGLAF Tours is not liable for any costs arising from events covered by travel insurance.</p>
 
         <h2>7. Our Responsibilities</h2>
         <p>We will use reasonable care and skill in arranging and providing your tour services. However, we shall not be liable for any injury, loss, damage, or delay arising from circumstances beyond our control, including but not limited to natural disasters, civil unrest, strikes, or government actions.</p>
@@ -128,7 +128,7 @@ $seoCanonical = absolute_site_url('pages/terms-of-service.php');
         <h2>11. Contact Us</h2>
         <p>For any questions regarding these terms, please contact us:</p>
         <ul>
-            <li><strong>Email:</strong> <a href="mailto:<?= htmlspecialchars($cfg('contact_email', 'info@nayagaratours.lk')) ?>"><?= htmlspecialchars($cfg('contact_email', 'info@nayagaratours.lk')) ?></a></li>
+            <li><strong>Email:</strong> <a href="mailto:<?= htmlspecialchars($cfg('contact_email', 'info@caglaftours.com')) ?>"><?= htmlspecialchars($cfg('contact_email', 'info@caglaftours.com')) ?></a></li>
             <li><strong>Phone:</strong> <?= htmlspecialchars($cfg('contact_phone', '+94 11 234 5678')) ?></li>
             <li><strong>Address:</strong> <?= htmlspecialchars($cfg('contact_address', 'No. 15, Galle Road, Colombo 03, Sri Lanka')) ?></li>
         </ul>

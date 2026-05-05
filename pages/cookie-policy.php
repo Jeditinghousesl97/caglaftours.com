@@ -6,8 +6,8 @@ if (file_exists(__DIR__ . '/../maintenance.flag')) { include __DIR__ . '/../main
 
 $s   = $pdo->query("SELECT `key`, `value` FROM settings")->fetchAll(PDO::FETCH_KEY_PAIR);
 $cfg = fn(string $key, string $default = '') => (isset($s[$key]) && $s[$key] !== '') ? $s[$key] : $default;
-$seoTitle = 'Cookie Policy | Nayagara Tours Sri Lanka';
-$seoDesc = 'Cookie Policy for Nayagara Tours Sri Lanka. Learn about the cookies we use and how to manage your preferences.';
+$seoTitle = 'Cookie Policy | CAGLAF Tours Sri Lanka';
+$seoDesc = 'Cookie Policy for CAGLAF Tours Sri Lanka. Learn about the cookies we use and how to manage your preferences.';
 $seoCanonical = absolute_site_url('pages/cookie-policy.php');
 ?>
 <!DOCTYPE html>
@@ -23,7 +23,7 @@ $seoCanonical = absolute_site_url('pages/cookie-policy.php');
         'canonical' => $seoCanonical,
         'image' => 'assets/images/logo.png',
         'type' => 'website',
-        'site_name' => $cfg('site_name', 'Nayagara Tours'),
+        'site_name' => $cfg('site_name', 'CAGLAF Tours'),
     ]); ?>
     <title><?= htmlspecialchars($seoTitle) ?></title>
 
@@ -101,7 +101,7 @@ $seoCanonical = absolute_site_url('pages/cookie-policy.php');
 
     <div class="policy-body">
 
-        <p>This Cookie Policy explains what cookies are, how Nayagara Tours uses them on our website, and what choices you have regarding their use. By continuing to use our website, you consent to our use of cookies as described in this policy.</p>
+        <p>This Cookie Policy explains what cookies are, how CAGLAF Tours uses them on our website, and what choices you have regarding their use. By continuing to use our website, you consent to our use of cookies as described in this policy.</p>
 
         <h2>1. What Are Cookies?</h2>
         <p>Cookies are small text files that are stored on your device (computer, tablet, or mobile) when you visit a website. They help the website remember your actions and preferences over time, so you don't have to re-enter them each time you visit.</p>
@@ -171,7 +171,7 @@ $seoCanonical = absolute_site_url('pages/cookie-policy.php');
         <h2>7. Contact Us</h2>
         <p>If you have any questions about our use of cookies, please contact us:</p>
         <ul>
-            <li><strong>Email:</strong> <a href="mailto:<?= htmlspecialchars($cfg('contact_email', 'info@nayagaratours.lk')) ?>"><?= htmlspecialchars($cfg('contact_email', 'info@nayagaratours.lk')) ?></a></li>
+            <li><strong>Email:</strong> <a href="mailto:<?= htmlspecialchars($cfg('contact_email', 'info@caglaftours.com')) ?>"><?= htmlspecialchars($cfg('contact_email', 'info@caglaftours.com')) ?></a></li>
             <li><strong>Phone:</strong> <?= htmlspecialchars($cfg('contact_phone', '+94 11 234 5678')) ?></li>
         </ul>
 
