@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                     }
                     saveSetting($pdo, 'site_logo', site_url($publicPath));
+                    saveSetting($pdo, 'cache_busted_at', date('Y-m-d H:i:s'));
                 } else {
                     $errors[] = 'Logo upload failed. Please check folder permissions for ' . $logoDir;
                 }
@@ -371,7 +372,12 @@ include __DIR__ . '/../includes/header.php';
           <div class="mb-4">
             <label class="form-label fw-semibold">Site Logo</label>
             <div class="d-flex align-items-center gap-3 mb-2">
-              <?php $logo = public_asset_url($s['site_logo'] ?? ''); ?>
+              <?php
+                $logo = public_asset_url($s['site_logo'] ?? '');
+                if ($logo && !empty($s['cache_busted_at'])) {
+                    $logo .= (str_contains($logo, '?') ? '&' : '?') . 'v=' . rawurlencode((string)$s['cache_busted_at']);
+                }
+              ?>
               <?php if ($logo): ?>
                 <img src="<?= htmlspecialchars($logo) ?>" style="max-height:48px;max-width:180px;object-fit:contain;border:1px solid #e2e8f0;border-radius:8px;padding:4px;">
                 <span class="text-success small"><i class="bi bi-check-circle me-1"></i>Logo set</span>

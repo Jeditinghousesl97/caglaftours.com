@@ -18,7 +18,16 @@ if (isset($pdo)) {
     }
 }
 ?>
-    <meta name="site-logo" content="<?= htmlspecialchars(public_asset_url($cfg('site_logo', ''))) ?>">
+<?php
+$siteLogo = public_asset_url($cfg('site_logo', ''));
+if ($siteLogo !== '') {
+    $logoVersion = trim((string) $cfg('cache_busted_at', ''));
+    if ($logoVersion !== '') {
+        $siteLogo .= (str_contains($siteLogo, '?') ? '&' : '?') . 'v=' . rawurlencode($logoVersion);
+    }
+}
+?>
+    <meta name="site-logo" content="<?= htmlspecialchars($siteLogo) ?>">
     <meta name="site-name" content="<?= htmlspecialchars($cfg('site_name', 'CAGLAF Tours')) ?>">
     <meta name="site-tagline" content="<?= htmlspecialchars($cfg('site_tagline', 'Come as a guest - Leave as a friend.')) ?>">
     <meta name="wa-number" content="<?= preg_replace('/\D/', '', $cfg('contact_whatsapp', '')) ?>">
