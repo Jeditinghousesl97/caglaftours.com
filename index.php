@@ -14,6 +14,7 @@ $s = $pdo->query("SELECT `key`, `value` FROM settings")->fetchAll(PDO::FETCH_KEY
 $cfg = fn(string $key, string $default = '') => $s[$key] ?? $default;
 $turnstileSiteKey = nt_turnstile_site_key($s);
 $turnstileEnabled = nt_turnstile_enabled($s);
+$assetVersion = urlencode((string)($cfg('cache_busted_at', '') ?: '1'));
 
 // Hero banners
 $banners = $pdo->query("SELECT * FROM hero_banners WHERE is_active = 1 ORDER BY sort_order, id")->fetchAll();
@@ -84,22 +85,22 @@ $seoSchemas = [
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/variables.css?v=<?= $assetVersion ?>">
     <?php include __DIR__ . '/assets/php/site-theme.php'; ?>
-    <link rel="stylesheet" href="assets/css/base.css">
-    <link rel="stylesheet" href="assets/css/navbar.css">
-    <link rel="stylesheet" href="assets/css/hero.css">
-    <link rel="stylesheet" href="assets/css/about.css">
-    <link rel="stylesheet" href="assets/css/services.css">
-    <link rel="stylesheet" href="assets/css/packages.css">
-    <link rel="stylesheet" href="assets/css/partners.css">
-    <link rel="stylesheet" href="assets/css/destinations.css">
-    <link rel="stylesheet" href="assets/css/gallery.css">
-    <link rel="stylesheet" href="assets/css/reviews.css">
-    <link rel="stylesheet" href="assets/css/custom-tour.css">
-    <link rel="stylesheet" href="assets/css/contact.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/base.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/navbar.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/hero.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/about.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/services.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/packages.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/partners.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/destinations.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/gallery.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/reviews.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/custom-tour.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/contact.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/footer.css?v=<?= $assetVersion ?>">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=<?= $assetVersion ?>">
     <?php if ($cfg('google_analytics')): ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?= htmlspecialchars($cfg('google_analytics')) ?>"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','<?= htmlspecialchars($cfg('google_analytics')) ?>');</script>

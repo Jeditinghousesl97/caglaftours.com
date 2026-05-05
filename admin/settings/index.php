@@ -99,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $color = theme_normalize_hex_color($_POST[$key] ?? '', $meta['default']);
             saveSetting($pdo, $key, $color);
         }
+        saveSetting($pdo, 'cache_busted_at', date('Y-m-d H:i:s'));
         $s = array_column($pdo->query('SELECT `key`,`value` FROM settings')->fetchAll(), 'value', 'key');
         $success = 'Appearance settings saved.';
     }
