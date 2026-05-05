@@ -4,8 +4,10 @@ Options -Indexes
 RewriteEngine On
 RewriteBase /
 
-# Force HTTPS
-RewriteCond %{HTTPS} off
+# Force HTTPS (proxy/CDN aware to avoid redirect loops)
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+RewriteCond %{HTTP:CF-Visitor} !"\"scheme\":\"https\"" [NC]
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # Redirect /index.php to / (remove duplicate)
