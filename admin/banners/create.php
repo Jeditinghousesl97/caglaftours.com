@@ -6,7 +6,12 @@ require_once __DIR__ . '/../includes/auth.php';
 $pdo    = getPDO();
 $errors = [];
 
+if (!columnExists($pdo, 'hero_banners', 'badge_text')) {
+    $pdo->exec("ALTER TABLE hero_banners ADD COLUMN badge_text VARCHAR(150) DEFAULT NULL AFTER image_path");
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $badge_text = trim($_POST['badge_text'] ?? '');
     $heading    = trim($_POST['heading'] ?? '');
     $subheading = trim($_POST['subheading'] ?? '');
     $btn_label  = trim($_POST['btn_label'] ?? 'Explore Now');
@@ -41,9 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $maxOrder = $pdo->query('SELECT COALESCE(MAX(sort_order),0) FROM hero_banners')->fetchColumn();
         $pdo->prepare('
-            INSERT INTO hero_banners (heading, subheading, image_path, btn_label, btn_link, sort_order, is_active)
-            VALUES (?,?,?,?,?,?,?)
-        ')->execute([$heading, $subheading ?: null, $image_path, $btn_label, $btn_link, $maxOrder + 1, $is_active]);
+            INSERT INTO hero_banners (badge_text, heading, subheading, image_path, btn_label, btn_link, sort_order, is_active)
+            VALUES (?,?,?,?,?,?,?,?)
+        ')->execute([$badge_text ?: null, $heading, $subheading ?: null, $image_path, $btn_label, $btn_link, $maxOrder + 1, $is_active]);
         header('Location: index.php?created=1'); exit;
     }
 }
@@ -76,6 +81,13 @@ include __DIR__ . '/../includes/header.php';
       <div class="admin-card mb-3">
         <div class="card-header">Banner Content</div>
         <div class="p-3">
+          <div class="mb-3">
+            <label class="form-label">Hero Badge Text <small class="text-muted">(optional)</small></label>
+            <input type="text" name="badge_text" class="form-control"
+                   value="<?= htmlspecialchars($_POST['badge_text'] ?? '') ?>"
+                   placeholder="e.g. Welcome to CAGLAF Tours">
+            <div class="form-text">Small text shown above the main heading on this slide.</div>
+          </div>
           <div class="mb-3">
             <label class="form-label">Heading <span class="text-danger">*</span></label>
             <input type="text" name="heading" class="form-control"

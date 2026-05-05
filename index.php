@@ -133,7 +133,7 @@ $seoSchemas = [
                      style="background-image: url('<?= htmlspecialchars($b['image_path'] ? site_url($b['image_path']) : 'assets/images/hero/slide-1.jpg') ?>')">
                     <div class="hero-overlay"></div>
                     <div class="container hero-content">
-                        <span class="hero-badge"><?= htmlspecialchars($cfg('site_name', 'CAGLAF Tours')) ?></span>
+                        <span class="hero-badge"><?= htmlspecialchars($b['badge_text'] ?: $cfg('site_name', 'CAGLAF Tours')) ?></span>
                         <<?= $heroTag ?>><?= renderHeroHeading($b['heading']) ?></<?= $heroTag ?>>
                         <?php if ($b['subheading']): ?>
                         <p><?= htmlspecialchars($b['subheading']) ?></p>

@@ -158,6 +158,7 @@ CREATE TABLE IF NOT EXISTS hero_banners (
   heading     VARCHAR(250) NOT NULL,
   subheading  VARCHAR(350) DEFAULT NULL,
   image_path  VARCHAR(300) NOT NULL,
+  badge_text  VARCHAR(150) DEFAULT NULL,
   btn_label   VARCHAR(100) DEFAULT 'Explore Now',
   btn_link    VARCHAR(300) DEFAULT '#packages',
   sort_order  SMALLINT UNSIGNED DEFAULT 0,

@@ -5,6 +5,10 @@ require_once __DIR__ . '/../includes/auth.php';
 
 $pdo = getPDO();
 
+if (!columnExists($pdo, 'hero_banners', 'badge_text')) {
+    $pdo->exec("ALTER TABLE hero_banners ADD COLUMN badge_text VARCHAR(150) DEFAULT NULL AFTER image_path");
+}
+
 // Toggle active
 if (isset($_GET['toggle'])) {
     $pdo->prepare('UPDATE hero_banners SET is_active = NOT is_active WHERE id = ?')
@@ -106,6 +110,9 @@ include __DIR__ . '/../includes/header.php';
 
         <!-- Content -->
         <div class="banner-content">
+          <?php if (!empty($b['badge_text'])): ?>
+            <div class="banner-subheading"><i class="bi bi-bookmark-star me-1"></i><?= htmlspecialchars($b['badge_text']) ?></div>
+          <?php endif; ?>
           <div class="banner-heading"><?= htmlspecialchars($b['heading']) ?></div>
           <?php if ($b['subheading']): ?>
             <div class="banner-subheading"><?= htmlspecialchars($b['subheading']) ?></div>
