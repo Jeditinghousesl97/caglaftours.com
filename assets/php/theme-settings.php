@@ -88,6 +88,24 @@ if (!function_exists('theme_setting_definitions')) {
                 'default' => '#E2E8F0',
                 'description' => 'Borders and separators.',
             ],
+            'theme_hero_overlay_top' => [
+                'label' => 'Hero Overlay Top',
+                'css_var' => '--hero-overlay-top-color',
+                'default' => '#03045E',
+                'description' => 'Top fade color used in homepage hero overlay.',
+            ],
+            'theme_hero_overlay_mid' => [
+                'label' => 'Hero Overlay Middle',
+                'css_var' => '--hero-overlay-mid-color',
+                'default' => '#0077B6',
+                'description' => 'Middle gradient color used in homepage hero overlay.',
+            ],
+            'theme_hero_overlay_end' => [
+                'label' => 'Hero Overlay End',
+                'css_var' => '--hero-overlay-end-color',
+                'default' => '#00B4D8',
+                'description' => 'End gradient color used in homepage hero overlay.',
+            ],
         ];
     }
 }
