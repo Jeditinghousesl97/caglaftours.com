@@ -137,8 +137,6 @@ $seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/lo
                     <i class="fa-solid fa-globe"></i> All Packages
                 </button>
                 <?php
-                // Only show filter buttons for categories that have packages
-                $usedCats = array_unique(array_column($packages, 'category'));
                 $filterMap = ['cultural','beach','wildlife','hill','honeymoon','adventure',
                               'sightseeing','leisure','round-tours','most-popular','escape-to-wild'];
                 $filterIcons = [
@@ -168,7 +166,6 @@ $seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/lo
                     'escape-to-wild'=>'Escape to Wild',
                 ];
                 foreach ($filterMap as $cat):
-                    if (!in_array($cat, $usedCats)) continue;
                     $fc = $catFilter[$cat] ?? $cat;
                 ?>
                 <button class="filter-btn" data-filter="<?= $fc ?>">

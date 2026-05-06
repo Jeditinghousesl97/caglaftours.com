@@ -19,8 +19,16 @@ $assetVersion = urlencode((string)($cfg('cache_busted_at', '') ?: '1'));
 // Hero banners
 $banners = $pdo->query("SELECT * FROM hero_banners WHERE is_active = 1 ORDER BY sort_order, id")->fetchAll();
 
-// Featured packages (featured first, then active, max 6)
-$packages = $pdo->query("SELECT * FROM packages WHERE is_active = 1 ORDER BY is_featured DESC, id DESC LIMIT 6")->fetchAll();
+// What We Offer: always pin featured packages first, then newest packages.
+$packages = $pdo->query("
+    SELECT * FROM packages
+    WHERE is_active = 1
+    ORDER BY
+        CASE WHEN is_featured = 1 THEN 0 ELSE 1 END ASC,
+        created_at DESC,
+        id DESC
+    LIMIT 6
+")->fetchAll();
 
 // Latest published blog posts (for destinations section)
 $blogs = $pdo->query("SELECT * FROM blog_posts WHERE is_published = 1 ORDER BY published_at DESC LIMIT 5")->fetchAll();
