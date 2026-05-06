@@ -20,13 +20,31 @@ if (isset($pdo)) {
 ?>
 <?php
 $siteLogo = public_asset_url($cfg('site_logo', ''));
+$siteFavicon = public_asset_url($cfg('site_favicon', ''));
+$cacheVersion = trim((string) $cfg('cache_busted_at', ''));
 if ($siteLogo !== '') {
-    $logoVersion = trim((string) $cfg('cache_busted_at', ''));
-    if ($logoVersion !== '') {
-        $siteLogo .= (str_contains($siteLogo, '?') ? '&' : '?') . 'v=' . rawurlencode($logoVersion);
+    if ($cacheVersion !== '') {
+        $siteLogo .= (str_contains($siteLogo, '?') ? '&' : '?') . 'v=' . rawurlencode($cacheVersion);
     }
 }
+if ($siteFavicon !== '' && $cacheVersion !== '') {
+    $siteFavicon .= (str_contains($siteFavicon, '?') ? '&' : '?') . 'v=' . rawurlencode($cacheVersion);
+}
+$faviconPath = parse_url($siteFavicon, PHP_URL_PATH) ?: '';
+$faviconType = 'image/png';
+if (preg_match('/\.svg$/i', $faviconPath)) {
+    $faviconType = 'image/svg+xml';
+} elseif (preg_match('/\.ico$/i', $faviconPath)) {
+    $faviconType = 'image/x-icon';
+} elseif (preg_match('/\.webp$/i', $faviconPath)) {
+    $faviconType = 'image/webp';
+}
 ?>
+    <?php if ($siteFavicon !== ''): ?>
+    <link rel="icon" type="<?= htmlspecialchars($faviconType) ?>" href="<?= htmlspecialchars($siteFavicon) ?>">
+    <link rel="shortcut icon" href="<?= htmlspecialchars($siteFavicon) ?>">
+    <meta name="msapplication-TileImage" content="<?= htmlspecialchars(absolute_site_url($siteFavicon)) ?>">
+    <?php endif; ?>
     <meta name="site-logo" content="<?= htmlspecialchars($siteLogo) ?>">
     <meta name="site-name" content="<?= htmlspecialchars($cfg('site_name', 'CAGLAF Tours')) ?>">
     <meta name="site-tagline" content="<?= htmlspecialchars($cfg('site_tagline', 'Come as a guest - Leave as a friend.')) ?>">

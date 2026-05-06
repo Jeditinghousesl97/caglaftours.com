@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/admin/config/db.php';
 require_once __DIR__ . '/assets/php/turnstile.php';
 require_once __DIR__ . '/assets/php/seo.php';
@@ -38,7 +38,7 @@ $badgeLabel = ['popular'=>'Popular','bestseller'=>'Best Seller','new'=>'New','li
 $seoTitle = $cfg('seo_meta_title', 'CAGLAF Tours | Explore the Beauty of Sri Lanka');
 $seoDesc  = $cfg('seo_meta_desc',  'CAGLAF Tours, Discover the Pearl of the Indian Ocean. Expertly crafted Sri Lanka tour packages.');
 $seoCanonical = absolute_site_url('/');
-$seoImage = $cfg('site_logo', '') ?: 'assets/images/logo.png';
+$seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/logo.png');
 $seoSchemas = [
     [
         '@context' => 'https://schema.org',
@@ -78,7 +78,6 @@ $seoSchemas = [
     ]); ?>
     <title><?= htmlspecialchars($seoTitle) ?></title>
 
-    <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -438,7 +437,7 @@ $seoSchemas = [
                                     <?php if (!empty($b['author'])): ?><span><i class="fa fa-user"></i> <?= htmlspecialchars($b['author']) ?></span><?php endif; ?>
                                 </div>
                                 <h3><?= htmlspecialchars($b['title']) ?></h3>
-                                <p><?= htmlspecialchars(mb_substr(strip_tags($b['excerpt'] ?? $b['content'] ?? ''), 0, 130)) ?>…</p>
+                                <p><?= htmlspecialchars(mb_substr(strip_tags($b['excerpt'] ?? $b['content'] ?? ''), 0, 130)) ?>â€¦</p>
                                 <a href="pages/blog-detail.php?slug=<?= urlencode($b['slug']) ?>" class="dest-link">Read More <i class="fa fa-arrow-right"></i></a>
                             </div>
                         </div>
@@ -704,7 +703,7 @@ $seoSchemas = [
                                 <select id="ctPax">
                                     <option value="">Number of Travellers</option>
                                     <option>1 Person</option><option>2 People</option>
-                                    <option>3–5 People</option><option>6–10 People</option><option>10+ People</option>
+                                    <option>3â€“5 People</option><option>6â€“10 People</option><option>10+ People</option>
                                 </select>
                             </div>
                         </div>
@@ -1100,3 +1099,7 @@ $seoSchemas = [
 
 </body>
 </html>
+
+
+
+

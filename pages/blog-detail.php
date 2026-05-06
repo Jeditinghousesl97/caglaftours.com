@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../admin/config/db.php';
 require_once __DIR__ . '/../assets/php/seo.php';
 $pdo = getPDO();
@@ -99,6 +99,7 @@ $seoCanonical = $useStatic
     ? absolute_site_url('pages/blog-detail.php')
     : absolute_site_url('pages/blog-detail.php?slug=' . rawurlencode($slug));
 $seoDesc = html_entity_decode($metaDesc, ENT_QUOTES, 'UTF-8');
+$seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/logo.png');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,7 +112,7 @@ $seoDesc = html_entity_decode($metaDesc, ENT_QUOTES, 'UTF-8');
         'title' => html_entity_decode($pageTitle, ENT_QUOTES, 'UTF-8'),
         'description' => $seoDesc,
         'canonical' => $seoCanonical,
-        'image' => 'assets/images/logo.png',
+        'image' => $seoImage,
         'type' => 'article',
         'site_name' => $cfg('site_name', 'CAGLAF Tours'),
         'structured_data' => [[
@@ -121,7 +122,7 @@ $seoDesc = html_entity_decode($metaDesc, ENT_QUOTES, 'UTF-8');
             'description' => $seoDesc,
             'datePublished' => $useStatic ? '2026-03-15' : ($post['published_at'] ?: date('Y-m-d')),
             'dateModified' => $useStatic ? '2026-03-15' : ($post['published_at'] ?: date('Y-m-d')),
-            'image' => [absolute_site_url('assets/images/logo.png')],
+            'image' => [absolute_site_url($seoImage)],
             'mainEntityOfPage' => $seoCanonical,
             'author' => [
                 '@type' => 'Organization',
@@ -137,10 +138,7 @@ $seoDesc = html_entity_decode($metaDesc, ENT_QUOTES, 'UTF-8');
             ],
         ]],
     ]); ?>
-    <title><?= $pageTitle ?></title>
-
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title><?= $pageTitle ?></title>    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -221,39 +219,39 @@ $seoDesc = html_entity_decode($metaDesc, ENT_QUOTES, 'UTF-8');
                         <img src="../assets/images/blog/sigiriya.jpg" alt="Sigiriya Rock Fortress" class="article-img">
                         <p class="article-img-caption">Sigiriya Rock Fortress, a UNESCO World Heritage Site and one of Sri Lanka's most iconic landmarks</p>
                         <h3>Sigiriya &amp; the Cultural Triangle</h3>
-                        <p>The <strong>Cultural Triangle</strong> in north-central Sri Lanka is home to some of the most remarkable ancient sites in Asia. Sigiriya Rock Fortress (5th century), the Dambulla Cave Temples, the medieval royal city of Polonnaruwa, and the sacred ancient capital of Anuradhapura form a circuit that most visitors spend 3–4 days exploring.</p>
+                        <p>The <strong>Cultural Triangle</strong> in north-central Sri Lanka is home to some of the most remarkable ancient sites in Asia. Sigiriya Rock Fortress (5th century), the Dambulla Cave Temples, the medieval royal city of Polonnaruwa, and the sacred ancient capital of Anuradhapura form a circuit that most visitors spend 3â€“4 days exploring.</p>
                         <h3>Kandy, The Cultural Capital</h3>
                         <p>Set in a bowl of forested hills around a picturesque lake, Kandy is Sri Lanka's second city and spiritual heart. The <strong>Temple of the Tooth Relic</strong> (Sri Dalada Maligawa) houses what is believed to be the Buddha's tooth and draws thousands of pilgrims daily.</p>
                         <h3>The Hill Country: Ella, Nuwara Eliya &amp; the Train</h3>
                         <p>The <strong>Kandy to Ella train</strong> is consistently rated one of the world's most scenic rail journeys. Winding through emerald tea estates, misty mountains, and past waterfalls for 7 hours, it's an experience in itself.</p>
                         <img src="../assets/images/blog/ella.jpg" alt="Hill Country Tea Estates" class="article-img">
                         <p class="article-img-caption">The emerald tea estates of Sri Lanka's Hill Country, best seen from the train window between Kandy and Ella</p>
-                        <div class="pull-quote"><p>"Sri Lanka is like five countries in one, ancient ruins in the morning, tea estates at noon, and a beach sunset to end the day. I've been to 40+ countries and this is the one I keep returning to."</p><cite>— Sarah Mitchell, UK, CAGLAF Tours guest, 2025</cite></div>
+                        <div class="pull-quote"><p>"Sri Lanka is like five countries in one, ancient ruins in the morning, tea estates at noon, and a beach sunset to end the day. I've been to 40+ countries and this is the one I keep returning to."</p><cite>â€” Sarah Mitchell, UK, CAGLAF Tours guest, 2025</cite></div>
 
                         <h2 id="section-3">3. Getting Around Sri Lanka</h2>
                         <p>Sri Lanka is a small country (roughly 430 km north to south) but roads can be slow. Here are your main transport options:</p>
                         <ul>
                             <li><strong>Private A/C vehicle with driver:</strong> The most comfortable and flexible option, especially for families and couples. This is what all CAGLAF Tours packages include.</li>
-                            <li><strong>Trains:</strong> Scenic and affordable but slow. Essential for the Kandy–Ella route.</li>
+                            <li><strong>Trains:</strong> Scenic and affordable but slow. Essential for the Kandyâ€“Ella route.</li>
                             <li><strong>Tuk-tuks:</strong> Perfect for short distances within towns.</li>
                             <li><strong>Buses:</strong> Very cheap but crowded and slow.</li>
                         </ul>
-                        <div class="warn-box"><i class="fa-solid fa-triangle-exclamation"></i><p><strong>Driving yourself</strong> in Sri Lanka is not recommended for first-time visitors. Roads are narrow, unmarked, and shared with buses, tuk-tuks, cattle, and pedestrians. Hiring a driver is affordable ($30–50/day) and stress-free.</p></div>
+                        <div class="warn-box"><i class="fa-solid fa-triangle-exclamation"></i><p><strong>Driving yourself</strong> in Sri Lanka is not recommended for first-time visitors. Roads are narrow, unmarked, and shared with buses, tuk-tuks, cattle, and pedestrians. Hiring a driver is affordable ($30â€“50/day) and stress-free.</p></div>
 
                         <h2 id="section-4">4. Visa &amp; Entry Requirements</h2>
-                        <p>Most nationalities can enter Sri Lanka on an <strong>Electronic Travel Authorisation (ETA)</strong>, which must be applied for online before arrival. The process takes 10–15 minutes and approval is usually instant.</p>
+                        <p>Most nationalities can enter Sri Lanka on an <strong>Electronic Travel Authorisation (ETA)</strong>, which must be applied for online before arrival. The process takes 10â€“15 minutes and approval is usually instant.</p>
                         <div class="info-grid">
                             <div class="info-grid-item"><span class="info-label">ETA Cost</span><span class="info-val">USD $35 (tourist)</span></div>
                             <div class="info-grid-item"><span class="info-label">Stay Allowed</span><span class="info-val">Up to 30 days</span></div>
                             <div class="info-grid-item"><span class="info-label">Apply Online</span><span class="info-val">eta.gov.lk</span></div>
-                            <div class="info-grid-item"><span class="info-label">Processing Time</span><span class="info-val">Instant – 24 hours</span></div>
+                            <div class="info-grid-item"><span class="info-label">Processing Time</span><span class="info-val">Instant â€“ 24 hours</span></div>
                         </div>
 
                         <h2 id="section-5">5. Budget Guide, How Much Does Sri Lanka Cost?</h2>
                         <div class="info-grid">
-                            <div class="info-grid-item"><span class="info-label"><i class="fa-solid fa-tent"></i> Budget Traveler</span><span class="info-val">$30 – $50 / day</span></div>
-                            <div class="info-grid-item"><span class="info-label"><i class="fa-solid fa-hotel"></i> Mid-Range</span><span class="info-val">$80 – $150 / day</span></div>
-                            <div class="info-grid-item"><span class="info-label"><i class="fa-solid fa-star"></i> Comfort</span><span class="info-val">$150 – $280 / day</span></div>
+                            <div class="info-grid-item"><span class="info-label"><i class="fa-solid fa-tent"></i> Budget Traveler</span><span class="info-val">$30 â€“ $50 / day</span></div>
+                            <div class="info-grid-item"><span class="info-label"><i class="fa-solid fa-hotel"></i> Mid-Range</span><span class="info-val">$80 â€“ $150 / day</span></div>
+                            <div class="info-grid-item"><span class="info-label"><i class="fa-solid fa-star"></i> Comfort</span><span class="info-val">$150 â€“ $280 / day</span></div>
                             <div class="info-grid-item"><span class="info-label"><i class="fa-solid fa-gem"></i> Luxury</span><span class="info-val">$280+ / day</span></div>
                         </div>
 
@@ -270,7 +268,7 @@ $seoDesc = html_entity_decode($metaDesc, ENT_QUOTES, 'UTF-8');
                             <li><strong>Use your right hand</strong> for giving/receiving things and greeting.</li>
                             <li><strong>Bargaining is acceptable</strong> in markets and with tuk-tuk drivers, but not in restaurants.</li>
                         </ul>
-                        <div class="pull-quote"><p>"Sri Lanka gave us more warmth, more color, and more soul than we expected. The people are what make this island truly special."</p><cite>— Emma van den Berg, Netherlands, CAGLAF Tours guest, 2025</cite></div>
+                        <div class="pull-quote"><p>"Sri Lanka gave us more warmth, more color, and more soul than we expected. The people are what make this island truly special."</p><cite>â€” Emma van den Berg, Netherlands, CAGLAF Tours guest, 2025</cite></div>
 
                         <h2 id="section-8">8. Essential Packing List</h2>
                         <div class="tip-box"><div class="tip-box-header"><i class="fa-solid fa-bag-shopping"></i> What to Pack</div><ul>
@@ -513,3 +511,7 @@ $seoDesc = html_entity_decode($metaDesc, ENT_QUOTES, 'UTF-8');
     </script>
 </body>
 </html>
+
+
+
+

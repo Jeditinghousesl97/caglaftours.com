@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../admin/config/db.php';
 require_once __DIR__ . '/../assets/php/package-itinerary.php';
 require_once __DIR__ . '/../assets/php/turnstile.php';
@@ -49,7 +49,7 @@ $reviewCount = (int)($pkg['review_count'] ?? 0);
 $seoTitle = $title . ' | CAGLAF Tours Sri Lanka';
 $seoDesc = $title . ', ' . ($pkg['duration'] ? $pkg['duration'] . ' Sri Lanka tour.' : 'Sri Lanka tour package.') . ($price ? ' From $' . $price . ' per person.' : '');
 $seoCanonical = absolute_site_url('pages/package-detail.php?slug=' . rawurlencode($slug));
-$seoImage = 'assets/images/logo.png';
+$seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/logo.png');
 
 // Parse highlights (one per line)
 $highlights = $pkg['highlights'] ? array_filter(array_map('trim', explode("\n", $pkg['highlights']))) : [];
@@ -123,10 +123,7 @@ if (!empty($itineraryItems)) {
             ] : null,
         ]],
     ]); ?>
-    <title><?= htmlspecialchars($seoTitle) ?></title>
-
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title><?= htmlspecialchars($seoTitle) ?></title>    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -359,7 +356,7 @@ if (!empty($itineraryItems)) {
                                 </div>
                                 <?php endif; ?>
                             </div>
-                            <div class="sidebar-price-note">Starting price · Subject to availability</div>
+                            <div class="sidebar-price-note">Starting price Â· Subject to availability</div>
                         </div>
                         <div class="sidebar-price-body">
                             <ul class="sidebar-meta-list">
@@ -460,7 +457,7 @@ if (!empty($itineraryItems)) {
                             <span><i class="fa-solid fa-star"></i> <?= $rRat ?><?= $r['review_count'] ? ' (' . $r['review_count'] . ')' : '' ?></span>
                             <?php endif; ?>
                         </div>
-                        <p><?= htmlspecialchars(mb_substr($r['description'] ?? '', 0, 120)) ?>…</p>
+                        <p><?= htmlspecialchars(mb_substr($r['description'] ?? '', 0, 120)) ?>â€¦</p>
                         <a href="package-detail.php?slug=<?= urlencode($r['slug']) ?>" class="related-pkg-link">
                             <i class="fa-solid fa-arrow-right"></i> View Details
                         </a>
@@ -508,7 +505,7 @@ if (!empty($itineraryItems)) {
                             <select name="adults" required>
                                 <option value="">Select</option>
                                 <option value="1">1 Person</option><option value="2">2 People</option><option value="3">3 People</option>
-                                <option value="4">4 People</option><option value="6">5–8 People</option><option value="12">9–15 People</option>
+                                <option value="4">4 People</option><option value="6">5â€“8 People</option><option value="12">9â€“15 People</option>
                             </select>
                         </div>
                     </div>
@@ -645,3 +642,7 @@ if (!empty($itineraryItems)) {
 
 </body>
 </html>
+
+
+
+

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../admin/config/db.php';
 require_once __DIR__ . '/../assets/php/seo.php';
 $pdo = getPDO();
@@ -87,7 +87,7 @@ $staticPosts = [
 $seoTitle = 'Travel Blog | CAGLAF Tours Sri Lanka';
 $seoDesc = $cfg('blog_meta_desc','CAGLAF Tours Sri Lanka Blog, Travel tips, destination guides, food culture, visa planning, and honeymoon ideas for your perfect Sri Lanka trip.');
 $seoCanonical = absolute_site_url('pages/blog.php' . (($activeCat !== 'all' || $page > 1) ? ('?' . http_build_query(array_filter(['cat' => $activeCat === 'all' ? null : $activeCat, 'page' => $page > 1 ? $page : null]))) : ''));
-$seoImage = 'assets/images/logo.png';
+$seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/logo.png');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,10 +111,7 @@ $seoImage = 'assets/images/logo.png';
             'description' => $seoDesc,
         ]],
     ]); ?>
-    <title><?= htmlspecialchars($seoTitle) ?></title>
-
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title><?= htmlspecialchars($seoTitle) ?></title>    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -453,3 +450,7 @@ $seoImage = 'assets/images/logo.png';
     </script>
 </body>
 </html>
+
+
+
+

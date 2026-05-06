@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../admin/config/db.php';
 require_once __DIR__ . '/../assets/php/turnstile.php';
 require_once __DIR__ . '/../assets/php/seo.php';
@@ -36,7 +36,7 @@ $total = count($packages);
 $seoTitle = 'Tour Packages | CAGLAF Tours Sri Lanka';
 $seoDesc = 'CAGLAF Tours Sri Lanka Packages, Cultural, Beach, Wildlife, Hill Country & Honeymoon packages. Book your perfect Sri Lanka tour today.';
 $seoCanonical = absolute_site_url('pages/packages.php');
-$seoImage = 'assets/images/logo.png';
+$seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/logo.png');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,10 +60,7 @@ $seoImage = 'assets/images/logo.png';
             'description' => $seoDesc,
         ]],
     ]); ?>
-    <title><?= htmlspecialchars($seoTitle) ?></title>
-
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title><?= htmlspecialchars($seoTitle) ?></title>    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -343,7 +340,7 @@ $seoImage = 'assets/images/logo.png';
                         <div class="form-group">
                             <label>Country of Residence</label>
                             <select id="bkgCountry">
-                                <option value="">Select country…</option>
+                                <option value="">Select countryâ€¦</option>
                                 <option>United Kingdom</option><option>United States</option>
                                 <option>Australia</option><option>Germany</option>
                                 <option>France</option><option>Netherlands</option>
@@ -413,7 +410,7 @@ $seoImage = 'assets/images/logo.png';
     <script>
     AOS.init({ duration: 700, once: true });
 
-    // ── Category filter ──
+    // â”€â”€ Category filter â”€â”€
     function filterPackages(cat) {
         const cards = document.querySelectorAll('.pkg-card-wrap');
         let visible = 0;
@@ -478,7 +475,7 @@ $seoImage = 'assets/images/logo.png';
         const msgEl = document.getElementById('bkgMsg');
         const turnstileToken = getTurnstileToken(this);
         btn.disabled = true;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending…';
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sendingâ€¦';
 
         const res = await fetch('<?= htmlspecialchars(site_url('submit-booking.php')) ?>', {
             method: 'POST',
@@ -502,7 +499,7 @@ $seoImage = 'assets/images/logo.png';
         if (data.success) {
             msgEl.style.background = '#d1fae5';
             msgEl.style.color = '#065f46';
-            msgEl.textContent = '✓ Booking request sent! Our team will contact you within 2 hours.';
+            msgEl.textContent = 'âœ“ Booking request sent! Our team will contact you within 2 hours.';
             this.reset();
             resetTurnstile(this);
             btn.innerHTML = '<i class="fa-solid fa-check"></i> Request Sent!';
@@ -519,3 +516,7 @@ $seoImage = 'assets/images/logo.png';
 
 </body>
 </html>
+
+
+
+

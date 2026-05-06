@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../admin/config/db.php';
 require_once __DIR__ . '/../assets/php/seo.php';
 $pdo = getPDO();
@@ -9,6 +9,7 @@ $cfg = fn(string $key, string $default = '') => (isset($s[$key]) && $s[$key] !==
 $seoTitle = 'Terms of Service | CAGLAF Tours Sri Lanka';
 $seoDesc = 'Terms of Service for CAGLAF Tours Sri Lanka. Read our booking terms, cancellation policy, and conditions of travel.';
 $seoCanonical = absolute_site_url('pages/terms-of-service.php');
+$seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/logo.png');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,14 +22,11 @@ $seoCanonical = absolute_site_url('pages/terms-of-service.php');
         'title' => $seoTitle,
         'description' => $seoDesc,
         'canonical' => $seoCanonical,
-        'image' => 'assets/images/logo.png',
+        'image' => $seoImage,
         'type' => 'website',
         'site_name' => $cfg('site_name', 'CAGLAF Tours'),
     ]); ?>
-    <title><?= htmlspecialchars($seoTitle) ?></title>
-
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title><?= htmlspecialchars($seoTitle) ?></title>    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -142,3 +140,7 @@ $seoCanonical = absolute_site_url('pages/terms-of-service.php');
     <script src="../assets/js/main.js"></script>
 </body>
 </html>
+
+
+
+

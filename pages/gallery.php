@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../admin/config/db.php';
 require_once __DIR__ . '/../assets/php/seo.php';
 $pdo = getPDO();
@@ -65,7 +65,7 @@ $layoutPattern = ['tall','wide','','','wide','','','tall','wide','',''];
 $seoTitle = 'Photo Gallery | CAGLAF Tours Sri Lanka';
 $seoDesc = 'CAGLAF Tours Sri Lanka Photo Gallery, Beaches, Cultural Sites, Wildlife Safaris, Hill Country & more. Browse stunning moments from our tours.';
 $seoCanonical = absolute_site_url('pages/gallery.php');
-$seoImage = 'assets/images/logo.png';
+$seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/logo.png');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,10 +89,7 @@ $seoImage = 'assets/images/logo.png';
             'description' => $seoDesc,
         ]],
     ]); ?>
-    <title><?= htmlspecialchars($seoTitle) ?></title>
-
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title><?= htmlspecialchars($seoTitle) ?></title>    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -230,7 +227,7 @@ $seoImage = 'assets/images/logo.png';
         </div>
     </section>
 
-    <!-- VIDEO SECTION — only shown when admin has added active videos -->
+    <!-- VIDEO SECTION â€” only shown when admin has added active videos -->
     <?php if (!empty($videos)): ?>
     <section class="gallery-video-section section-pad">
         <div class="container">
@@ -389,3 +386,7 @@ $seoImage = 'assets/images/logo.png';
     </script>
 </body>
 </html>
+
+
+
+

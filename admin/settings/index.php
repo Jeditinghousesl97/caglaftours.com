@@ -23,6 +23,17 @@ function saveSetting(PDO $pdo, string $key, string $value): void {
         ->execute([$key, $value, $value]);
 }
 
+function removeUploadedAssetFromSetting(array $s, string $settingKey): void {
+    $assetUrl = trim((string)($s[$settingKey] ?? ''));
+    if ($assetUrl === '') {
+        return;
+    }
+    $assetPath = SITE_ROOT . ltrim(parse_url($assetUrl, PHP_URL_PATH) ?? '', '/');
+    if (is_file($assetPath)) {
+        unlink($assetPath);
+    }
+}
+
 // ── Handle POST ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tab = $_POST['tab'] ?? 'general';
@@ -71,6 +82,100 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $errors[] = 'Logo upload failed. Please check folder permissions for ' . $logoDir;
                 }
             }
+        }
+
+        if (!empty($_FILES['favicon']['name'])) {
+            $file    = $_FILES['favicon'];
+            $allowed = ['image/png','image/x-icon','image/vnd.microsoft.icon','image/svg+xml','image/webp'];
+            if (!in_array($file['type'], $allowed)) {
+                $errors[] = 'Favicon: PNG, ICO, SVG or WEBP only.';
+            } elseif ($file['size'] > 25 * 1024 * 1024) {
+                $errors[] = 'Favicon must be under 25MB.';
+            } else {
+                $ext          = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                $preferredDir = SITE_ROOT . 'uploads/branding/';
+                $fallbackDir  = SITE_ROOT . 'uploads/';
+                $faviconDir   = $preferredDir;
+
+                if (!is_dir($faviconDir) && !mkdir($faviconDir, 0775, true) && !is_dir($faviconDir)) {
+                    $faviconDir = $fallbackDir;
+                }
+
+                $dest       = $faviconDir . 'favicon.' . $ext;
+                $oldFiles   = glob($faviconDir . 'favicon.*') ?: [];
+                $publicPath = str_starts_with($faviconDir, $preferredDir)
+                    ? 'uploads/branding/favicon.' . $ext
+                    : 'uploads/favicon.' . $ext;
+
+                if (!is_dir($faviconDir)) {
+                    $errors[] = 'Favicon upload folder is missing: ' . $faviconDir;
+                } elseif (!is_writable($faviconDir)) {
+                    $errors[] = 'Favicon upload folder is not writable: ' . $faviconDir;
+                } elseif (move_uploaded_file($file['tmp_name'], $dest)) {
+                    foreach ($oldFiles as $oldFile) {
+                        if ($oldFile !== $dest && is_file($oldFile)) {
+                            unlink($oldFile);
+                        }
+                    }
+                    saveSetting($pdo, 'site_favicon', site_url($publicPath));
+                    saveSetting($pdo, 'cache_busted_at', date('Y-m-d H:i:s'));
+                } else {
+                    $errors[] = 'Favicon upload failed. Please check folder permissions for ' . $faviconDir;
+                }
+            }
+        }
+
+        if (!empty($_FILES['seo_image']['name'])) {
+            $file    = $_FILES['seo_image'];
+            $allowed = ['image/jpeg','image/png','image/webp'];
+            if (!in_array($file['type'], $allowed)) {
+                $errors[] = 'SEO image: JPG, PNG or WEBP only.';
+            } elseif ($file['size'] > 25 * 1024 * 1024) {
+                $errors[] = 'SEO image must be under 25MB.';
+            } else {
+                $ext          = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                $preferredDir = SITE_ROOT . 'uploads/branding/';
+                $fallbackDir  = SITE_ROOT . 'uploads/';
+                $seoDir       = $preferredDir;
+
+                if (!is_dir($seoDir) && !mkdir($seoDir, 0775, true) && !is_dir($seoDir)) {
+                    $seoDir = $fallbackDir;
+                }
+
+                $dest       = $seoDir . 'seo-image.' . $ext;
+                $oldFiles   = glob($seoDir . 'seo-image.*') ?: [];
+                $publicPath = str_starts_with($seoDir, $preferredDir)
+                    ? 'uploads/branding/seo-image.' . $ext
+                    : 'uploads/seo-image.' . $ext;
+
+                if (!is_dir($seoDir)) {
+                    $errors[] = 'SEO image upload folder is missing: ' . $seoDir;
+                } elseif (!is_writable($seoDir)) {
+                    $errors[] = 'SEO image upload folder is not writable: ' . $seoDir;
+                } elseif (move_uploaded_file($file['tmp_name'], $dest)) {
+                    foreach ($oldFiles as $oldFile) {
+                        if ($oldFile !== $dest && is_file($oldFile)) {
+                            unlink($oldFile);
+                        }
+                    }
+                    saveSetting($pdo, 'seo_image', site_url($publicPath));
+                    saveSetting($pdo, 'cache_busted_at', date('Y-m-d H:i:s'));
+                } else {
+                    $errors[] = 'SEO image upload failed. Please check folder permissions for ' . $seoDir;
+                }
+            }
+        }
+
+        if (isset($_POST['remove_favicon'])) {
+            removeUploadedAssetFromSetting($s, 'site_favicon');
+            saveSetting($pdo, 'site_favicon', '');
+            saveSetting($pdo, 'cache_busted_at', date('Y-m-d H:i:s'));
+        }
+
+        if (isset($_POST['remove_seo_image'])) {
+            removeUploadedAssetFromSetting($s, 'seo_image');
+            saveSetting($pdo, 'seo_image', '');
+            saveSetting($pdo, 'cache_busted_at', date('Y-m-d H:i:s'));
         }
         if (empty($errors)) { $s = array_column($pdo->query('SELECT `key`,`value` FROM settings')->fetchAll(), 'value', 'key'); $success = 'General settings saved.'; }
     }
@@ -388,7 +493,63 @@ include __DIR__ . '/../includes/header.php';
               <?php endif; ?>
             </div>
             <input type="file" name="logo" class="form-control" accept="image/jpeg,image/png,image/webp,image/svg+xml">
-            <div class="form-text">PNG or SVG recommended. Max 2MB.</div>
+            <div class="form-text">PNG or SVG recommended. Max 25MB.</div>
+          </div>
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Website Favicon</label>
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <?php
+                $favicon = public_asset_url($s['site_favicon'] ?? '');
+                if ($favicon && !empty($s['cache_busted_at'])) {
+                    $favicon .= (str_contains($favicon, '?') ? '&' : '?') . 'v=' . rawurlencode((string)$s['cache_busted_at']);
+                }
+              ?>
+              <?php if ($favicon): ?>
+                <img src="<?= htmlspecialchars($favicon) ?>" style="width:40px;height:40px;object-fit:contain;border:1px solid #e2e8f0;border-radius:8px;padding:4px;background:#fff;">
+                <span class="text-success small"><i class="bi bi-check-circle me-1"></i>Favicon set</span>
+              <?php else: ?>
+                <div style="width:40px;height:40px;background:#e2e8f0;border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="bi bi-image text-muted"></i></div>
+                <span class="text-muted small">No favicon uploaded</span>
+              <?php endif; ?>
+            </div>
+            <input type="file" name="favicon" class="form-control" accept="image/png,image/x-icon,image/vnd.microsoft.icon,image/svg+xml,image/webp">
+            <div class="form-text">Use square image (recommended 32x32 or 64x64). PNG or ICO recommended.</div>
+            <?php if (!empty($s['site_favicon'])): ?>
+              <div class="mt-2">
+                <label class="form-check-label small">
+                  <input type="checkbox" name="remove_favicon" value="1" class="form-check-input me-2">
+                  Remove current favicon on save
+                </label>
+              </div>
+            <?php endif; ?>
+          </div>
+          <div class="mb-4">
+            <label class="form-label fw-semibold">SEO Image (Open Graph / Social Share)</label>
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <?php
+                $seoImagePreview = public_asset_url($s['seo_image'] ?? '');
+                if ($seoImagePreview && !empty($s['cache_busted_at'])) {
+                    $seoImagePreview .= (str_contains($seoImagePreview, '?') ? '&' : '?') . 'v=' . rawurlencode((string)$s['cache_busted_at']);
+                }
+              ?>
+              <?php if ($seoImagePreview): ?>
+                <img src="<?= htmlspecialchars($seoImagePreview) ?>" style="width:120px;height:63px;object-fit:cover;border:1px solid #e2e8f0;border-radius:8px;background:#fff;">
+                <span class="text-success small"><i class="bi bi-check-circle me-1"></i>SEO image set</span>
+              <?php else: ?>
+                <div style="width:120px;height:63px;background:#e2e8f0;border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="bi bi-image text-muted"></i></div>
+                <span class="text-muted small">No SEO image uploaded</span>
+              <?php endif; ?>
+            </div>
+            <input type="file" name="seo_image" class="form-control" accept="image/jpeg,image/png,image/webp">
+            <div class="form-text">Recommended size: 1200x630px for Facebook/LinkedIn previews.</div>
+            <?php if (!empty($s['seo_image'])): ?>
+              <div class="mt-2">
+                <label class="form-check-label small">
+                  <input type="checkbox" name="remove_seo_image" value="1" class="form-check-input me-2">
+                  Remove current SEO image on save
+                </label>
+              </div>
+            <?php endif; ?>
           </div>
           <div class="mb-3">
             <label class="form-label fw-semibold">Site Name</label>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../admin/config/db.php';
 require_once __DIR__ . '/../assets/php/seo.php';
 $pdo = getPDO();
@@ -65,7 +65,7 @@ $staticCoreServices = [
     ['icon_class'=>'fa-hotel',          'title'=>'Hotel & Resort Booking',  'description'=>'Sri Lanka offers an extraordinary range of accommodation, from centuries-old colonial boutique hotels in Galle Fort to breathtaking cliff-top infinity pool resorts in Mirissa, lush tea-plantation bungalows in Ella, and intimate jungle lodges near Yala. We personally vet every property we recommend, ensuring quality, location, and value align perfectly with your expectations and budget.','features'=>"Curated selection from budget guesthouses to 5-star luxury\nBoutique colonial villas, beach resorts & eco-lodges\nBreakfast-included, half-board & all-inclusive options\nHoneymoon & suite upgrades available on request\nBest available rate, no booking fees\nPartner hotels: Cinnamon, Jetwing & Aitken Spence properties"],
     ['icon_class'=>'fa-user-tie',       'title'=>'Expert Local Guides',    'description'=>'Our certified Sri Lankan guides are the heart of the CAGLAF Tours experience. Trained in history, culture, wildlife, and geology, they bring Sigiriya\'s ancient frescoes, Kandy\'s sacred temples, Galle\'s colonial streets, and Yala\'s wildlife to vivid life. They don\'t just take you to the highlights, they reveal the hidden stories, the local legends, and the off-the-beaten-path gems.','features'=>"Certified by Sri Lanka Tourism & National Guide Association\nMultilingual guides, English, German, French, Mandarin & more\nSpecialist wildlife naturalists for safari & bird-watching\nCultural & heritage tour experts for UNESCO sites\nPrivate, small-group & large-group guide options\nLocal food, craft & culinary experience guided tours"],
     ['icon_class'=>'fa-passport',       'title'=>'Visa Assistance',        'description'=>'Most visitors to Sri Lanka require an Electronic Travel Authorisation (ETA) obtained online before arrival. The process, while straightforward, can be confusing, especially around document requirements, photo specifications, and processing times. Our team guides you through every step, reviews your application before submission, and helps resolve any issues quickly.','features'=>"Step-by-step ETA application guidance\nDocument checklist & pre-submission review\nVisa-on-arrival assistance at Colombo airport\nVisa extension support for long-stay travelers\nMultiple-entry & business visa advisory\nEmergency visa support available 24/7"],
-    ['icon_class'=>'fa-car-side',       'title'=>'Island-Wide Transfers',  'description'=>'Sri Lanka is a relatively small island but its diverse landscapes, from the central highlands to the southern coast, mean comfortable, well-timed transport is essential. We provide fully air-conditioned, modern vehicles with experienced, English-speaking drivers who know every road, shortcut, and scenic detour.','features'=>"Airport pickups & drop-offs, Colombo BIA, 24/7\nAir-conditioned cars, vans, minibuses & coaches\nColombo → Kandy → Ella → Mirissa & all routes\nEnglish-speaking, experienced professional drivers\nFlexible multi-day chauffeur-drive packages\nFlight & train connection monitoring for on-time pickup"],
+    ['icon_class'=>'fa-car-side',       'title'=>'Island-Wide Transfers',  'description'=>'Sri Lanka is a relatively small island but its diverse landscapes, from the central highlands to the southern coast, mean comfortable, well-timed transport is essential. We provide fully air-conditioned, modern vehicles with experienced, English-speaking drivers who know every road, shortcut, and scenic detour.','features'=>"Airport pickups & drop-offs, Colombo BIA, 24/7\nAir-conditioned cars, vans, minibuses & coaches\nColombo â†’ Kandy â†’ Ella â†’ Mirissa & all routes\nEnglish-speaking, experienced professional drivers\nFlexible multi-day chauffeur-drive packages\nFlight & train connection monitoring for on-time pickup"],
     ['icon_class'=>'fa-people-group',   'title'=>'Group Tours',            'description'=>'Whether you\'re travelling with family, friends, colleagues, or a school group, our tailored group tour packages bring people together through shared Sri Lankan experiences. We manage all logistics, accommodation, transport, meals, activities, across groups of any size, ensuring everyone travels comfortably, safely, and with maximum enjoyment.','features'=>"Custom itineraries for families, corporates & schools\nGroups from 5 to 500+, all sizes welcome\nCultural, wildlife, beach & adventure group packages\nGroup accommodation & meal coordination\nDedicated group tour manager throughout\nSpecial group discounts from 10 travelers"],
 ];
 
@@ -92,7 +92,7 @@ $delays            = [50, 100, 150, 200, 250, 300];
 $seoTitle = 'Our Services | CAGLAF Tours Sri Lanka';
 $seoDesc = 'CAGLAF Tours Services, Flight booking, hotel reservations, expert local guides, visa assistance, island-wide transfers and group tours across Sri Lanka.';
 $seoCanonical = absolute_site_url('pages/services.php');
-$seoImage = 'assets/images/logo.png';
+$seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/logo.png');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -121,10 +121,7 @@ $seoImage = 'assets/images/logo.png';
             'description' => $seoDesc,
         ]],
     ]); ?>
-    <title><?= htmlspecialchars($seoTitle) ?></title>
-
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title><?= htmlspecialchars($seoTitle) ?></title>    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -411,3 +408,7 @@ $seoImage = 'assets/images/logo.png';
     </script>
 </body>
 </html>
+
+
+
+
