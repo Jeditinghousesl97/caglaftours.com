@@ -25,6 +25,17 @@ $badgeLabels= ['' => 'None', 'popular' => 'Popular', 'bestseller' => 'Best Selle
 $difficulties = ['easy' => 'Easy', 'moderate' => 'Moderate', 'challenging' => 'Challenging'];
 $itineraryFormItems = nt_package_itinerary_form_items($_POST);
 
+function sanitizePackageDescriptionHtml(string $html): string
+{
+    // Remove executable/style blocks first.
+    $html = preg_replace('#<\s*(script|style)[^>]*>.*?<\s*/\s*\\1\s*>#is', '', $html) ?? '';
+    // Keep a safe subset of formatting tags.
+    $allowed = '<p><br><strong><b><em><i><u><ul><ol><li><h2><h3><h4><blockquote><a>';
+    $html = strip_tags($html, $allowed);
+    // Trim but keep internal spacing/newlines.
+    return trim($html);
+}
+
 function ensurePackageUploadDir(array &$errors): ?string
 {
     $dir = SITE_ROOT . 'uploads/packages/';
@@ -68,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $price    = ($_POST['price'] ?? '') !== '' ? $_POST['price'] : null;
     $old_price    = ($_POST['old_price'] ?? '') !== '' ? $_POST['old_price'] : null;
     $group_size   = trim($_POST['group_size']   ?? '');
-    $description  = trim($_POST['description']  ?? '');
+    $description  = sanitizePackageDescriptionHtml((string)($_POST['description'] ?? ''));
     $highlights   = trim($_POST['highlights']   ?? '');
     $itinerary    = trim($_POST['itinerary']    ?? '');
     $inclusions   = trim($_POST['inclusions']   ?? '');

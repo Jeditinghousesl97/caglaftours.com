@@ -243,7 +243,7 @@ $seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/lo
                             <?php endif; ?>
                         </div>
                         <h3><?= htmlspecialchars($p['title']) ?></h3>
-                        <p class="pkg-desc"><?= htmlspecialchars($p['description'] ?? '') ?></p>
+                        <p class="pkg-desc"><?= htmlspecialchars(trim(preg_replace('/\s+/', ' ', strip_tags((string)($p['description'] ?? ''))) ?? '')) ?></p>
 
                         <div class="pkg-cta-row">
                             <button class="pkg-book-btn"

@@ -42,6 +42,16 @@ function ensurePackagePriceColumnAllowsNull(PDO $pdo, array &$errors): bool
     return true;
 }
 
+function sanitizePackageDescriptionHtml(string $html): string
+{
+    // Remove executable/style blocks first.
+    $html = preg_replace('#<\s*(script|style)[^>]*>.*?<\s*/\s*\\1\s*>#is', '', $html) ?? '';
+    // Keep a safe subset of formatting tags.
+    $allowed = '<p><br><strong><b><em><i><u><ul><ol><li><h2><h3><h4><blockquote><a>';
+    $html = strip_tags($html, $allowed);
+    return trim($html);
+}
+
 $pkg = $pdo->prepare('SELECT * FROM packages WHERE id = ?');
 $pkg->execute([$id]);
 $pkg = $pkg->fetch();
@@ -78,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $price        = ($_POST['price'] ?? '') !== '' ? $_POST['price'] : null;
     $old_price    = ($_POST['old_price'] ?? '') !== '' ? $_POST['old_price'] : null;
     $group_size   = trim($_POST['group_size']   ?? '');
-    $description  = trim($_POST['description']  ?? '');
+    $description  = sanitizePackageDescriptionHtml((string)($_POST['description'] ?? ''));
     $highlights   = trim($_POST['highlights']   ?? '');
     $itinerary    = trim($_POST['itinerary']    ?? '');
     $inclusions   = trim($_POST['inclusions']   ?? '');

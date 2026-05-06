@@ -47,6 +47,7 @@ $difficulty  = ucfirst($pkg['difficulty'] ?? 'Moderate');
 $rating      = $pkg['rating'] ? number_format((float)$pkg['rating'], 1) : null;
 $reviewCount = (int)($pkg['review_count'] ?? 0);
 $seoTitle = $title . ' | CAGLAF Tours Sri Lanka';
+$plainDescription = trim(preg_replace('/\s+/', ' ', strip_tags((string)($pkg['description'] ?? ''))) ?? '');
 $seoDesc = $title . ', ' . ($pkg['duration'] ? $pkg['duration'] . ' Sri Lanka tour.' : 'Sri Lanka tour package.') . ($price ? ' From $' . $price . ' per person.' : '');
 $seoCanonical = absolute_site_url('pages/package-detail.php?slug=' . rawurlencode($slug));
 $seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/logo.png');
@@ -162,7 +163,7 @@ if (!empty($itineraryItems)) {
             </span>
             <?php endif; ?>
             <h1><?= htmlspecialchars($title) ?></h1>
-            <p><?= htmlspecialchars($pkg['description'] ? mb_substr($pkg['description'], 0, 160) : '') ?></p>
+            <p><?= htmlspecialchars($plainDescription !== '' ? mb_substr($plainDescription, 0, 160) : '') ?></p>
             <div style="display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;">
                 <?php if ($pkg['duration']): ?>
                 <span style="display:flex;align-items:center;gap:7px;color:rgba(255,255,255,0.9);font-size:0.88rem;font-weight:500;">
@@ -234,7 +235,7 @@ if (!empty($itineraryItems)) {
                             Tour Description
                         </h2>
                         <div class="detail-rich-text">
-                            <?= nl2br(htmlspecialchars($pkg['description'])) ?>
+                            <?= $pkg['description'] ?>
                         </div>
                     </div>
                     <?php endif; ?>
@@ -457,7 +458,7 @@ if (!empty($itineraryItems)) {
                             <span><i class="fa-solid fa-star"></i> <?= $rRat ?><?= $r['review_count'] ? ' (' . $r['review_count'] . ')' : '' ?></span>
                             <?php endif; ?>
                         </div>
-                        <p><?= htmlspecialchars(mb_substr($r['description'] ?? '', 0, 120)) ?>â€¦</p>
+                        <p><?= htmlspecialchars(mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags((string)($r['description'] ?? ''))) ?? ''), 0, 120)) ?>â€¦</p>
                         <a href="package-detail.php?slug=<?= urlencode($r['slug']) ?>" class="related-pkg-link">
                             <i class="fa-solid fa-arrow-right"></i> View Details
                         </a>
