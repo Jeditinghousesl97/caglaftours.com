@@ -200,7 +200,6 @@ $seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/lo
                     $badge   = $p['badge'] ?? '';
                     $rating  = $p['rating']  ? number_format((float)$p['rating'],  1) : null;
                     $reviews = (int)($p['review_count'] ?? 0);
-                    $dests   = $p['destinations'] ? array_slice(array_filter(array_map('trim', explode("\n", $p['destinations']))), 0, 3) : [];
                     $delay   = ($i % 3 + 1) * 50;
             ?>
             <div class="pkg-card-wrap" data-category="<?= htmlspecialchars($fc) ?>" data-aos="fade-up" data-aos-delay="<?= $delay ?>">
@@ -245,14 +244,6 @@ $seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/lo
                         </div>
                         <h3><?= htmlspecialchars($p['title']) ?></h3>
                         <p class="pkg-desc"><?= htmlspecialchars($p['description'] ?? '') ?></p>
-
-                        <?php if (!empty($dests)): ?>
-                        <div class="pkg-destinations">
-                            <?php foreach ($dests as $dest): ?>
-                            <span><i class="fa-solid fa-location-dot"></i> <?= htmlspecialchars($dest) ?></span>
-                            <?php endforeach; ?>
-                        </div>
-                        <?php endif; ?>
 
                         <div class="pkg-cta-row">
                             <button class="pkg-book-btn"
