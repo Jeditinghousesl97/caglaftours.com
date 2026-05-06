@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS packages (
   id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   title         VARCHAR(200)  NOT NULL,
   slug          VARCHAR(220)  NOT NULL UNIQUE,
-  category      ENUM('cultural','beach','wildlife','hill','honeymoon','adventure') NOT NULL,
+  category      ENUM('cultural','beach','wildlife','hill','honeymoon','adventure','sightseeing','leisure','round-tours','most-popular','escape-to-wild') NOT NULL,
   badge         ENUM('popular','bestseller','new','limited','hotdeal') DEFAULT NULL,
   duration      VARCHAR(50)   NOT NULL,
   price         DECIMAL(10,2) DEFAULT NULL,

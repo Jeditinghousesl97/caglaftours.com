@@ -6,7 +6,19 @@ require_once __DIR__ . '/../../assets/php/package-itinerary.php';
 
 $pdo        = getPDO();
 $errors     = [];
-$categories = ['cultural','beach','wildlife','hill','honeymoon','adventure'];
+$categories = [
+    'cultural' => 'Cultural',
+    'beach' => 'Beach',
+    'wildlife' => 'Wildlife',
+    'hill' => 'Hill',
+    'honeymoon' => 'Honeymoon',
+    'adventure' => 'Adventure',
+    'sightseeing' => 'Sightseeing',
+    'leisure' => 'Leisure',
+    'round-tours' => 'Round Tours',
+    'most-popular' => 'Most Popular',
+    'escape-to-wild' => 'Escape to Wild',
+];
 $badges     = ['','popular','bestseller','new','limited','hotdeal'];
 $badgeLabels= ['' => 'None', 'popular' => 'Popular', 'bestseller' => 'Best Seller',
                'new' => 'New', 'limited' => 'Limited Spots', 'hotdeal' => 'Hot Deal'];
@@ -187,10 +199,10 @@ include __DIR__ . '/../includes/header.php';
               <label class="form-label">Category <span class="text-danger">*</span></label>
               <select name="category" class="form-select" required>
                 <option value="">Select category</option>
-                <?php foreach ($categories as $cat): ?>
+                <?php foreach ($categories as $cat => $catLabel): ?>
                   <option value="<?= $cat ?>"
                     <?= ($_POST['category'] ?? '') === $cat ? 'selected' : '' ?>>
-                    <?= ucfirst($cat) ?>
+                    <?= htmlspecialchars($catLabel) ?>
                   </option>
                 <?php endforeach; ?>
               </select>

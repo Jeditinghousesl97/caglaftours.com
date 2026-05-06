@@ -44,7 +44,19 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $packages = $stmt->fetchAll();
 
-$categories = ['cultural','beach','wildlife','hill','honeymoon','adventure'];
+$categories = [
+    'cultural' => 'Cultural',
+    'beach' => 'Beach',
+    'wildlife' => 'Wildlife',
+    'hill' => 'Hill',
+    'honeymoon' => 'Honeymoon',
+    'adventure' => 'Adventure',
+    'sightseeing' => 'Sightseeing',
+    'leisure' => 'Leisure',
+    'round-tours' => 'Round Tours',
+    'most-popular' => 'Most Popular',
+    'escape-to-wild' => 'Escape to Wild',
+];
 
 $pageTitle = 'Packages';
 include __DIR__ . '/../includes/header.php';
@@ -86,9 +98,9 @@ include __DIR__ . '/../includes/header.php';
       <div class="col-sm-3">
         <select name="category" class="form-select form-select-sm">
           <option value="">All Categories</option>
-          <?php foreach ($categories as $cat): ?>
+          <?php foreach ($categories as $cat => $catLabel): ?>
             <option value="<?= $cat ?>" <?= $category === $cat ? 'selected' : '' ?>>
-              <?= ucfirst($cat) ?>
+              <?= htmlspecialchars($catLabel) ?>
             </option>
           <?php endforeach; ?>
         </select>
@@ -140,7 +152,7 @@ include __DIR__ . '/../includes/header.php';
               </td>
               <td>
                 <span class="badge rounded-pill" style="background:#e0f4fc;color:#0077B6;">
-                  <?= ucfirst($pkg['category']) ?>
+                  <?= htmlspecialchars($categories[$pkg['category']] ?? ucfirst($pkg['category'])) ?>
                 </span>
               </td>
               <td><?= htmlspecialchars($pkg['duration']) ?></td>

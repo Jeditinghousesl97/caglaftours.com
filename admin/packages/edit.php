@@ -50,7 +50,19 @@ if (!$pkg) {
     header('Location: index.php'); exit;
 }
 
-$categories   = ['cultural','beach','wildlife','hill','honeymoon','adventure'];
+$categories = [
+    'cultural' => 'Cultural',
+    'beach' => 'Beach',
+    'wildlife' => 'Wildlife',
+    'hill' => 'Hill',
+    'honeymoon' => 'Honeymoon',
+    'adventure' => 'Adventure',
+    'sightseeing' => 'Sightseeing',
+    'leisure' => 'Leisure',
+    'round-tours' => 'Round Tours',
+    'most-popular' => 'Most Popular',
+    'escape-to-wild' => 'Escape to Wild',
+];
 $badgeLabels  = ['' => 'None', 'popular' => 'Popular', 'bestseller' => 'Best Seller',
                  'new' => 'New', 'limited' => 'Limited Spots', 'hotdeal' => 'Hot Deal'];
 $difficulties = ['easy' => 'Easy', 'moderate' => 'Moderate', 'challenging' => 'Challenging'];
@@ -205,9 +217,9 @@ include __DIR__ . '/../includes/header.php';
             <div class="col-sm-6">
               <label class="form-label">Category <span class="text-danger">*</span></label>
               <select name="category" class="form-select" required>
-                <?php foreach ($categories as $cat): ?>
+                <?php foreach ($categories as $cat => $catLabel): ?>
                   <option value="<?= $cat ?>" <?= $pkg['category'] === $cat ? 'selected' : '' ?>>
-                    <?= ucfirst($cat) ?>
+                    <?= htmlspecialchars($catLabel) ?>
                   </option>
                 <?php endforeach; ?>
               </select>

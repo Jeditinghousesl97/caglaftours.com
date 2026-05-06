@@ -19,13 +19,46 @@ $turnstileSiteKey = nt_turnstile_site_key($s);
 $turnstileEnabled = nt_turnstile_enabled($s);
 
 // Maps
-$catIcon  = ['cultural'=>'fa-landmark','beach'=>'fa-umbrella-beach','wildlife'=>'fa-paw',
-             'hill'=>'fa-mountain','honeymoon'=>'fa-heart','adventure'=>'fa-person-hiking'];
-$catLabel = ['cultural'=>'Cultural','beach'=>'Beach','wildlife'=>'Wildlife',
-             'hill'=>'Hill Country','honeymoon'=>'Honeymoon','adventure'=>'Adventure'];
+$catIcon  = [
+    'cultural'=>'fa-landmark',
+    'beach'=>'fa-umbrella-beach',
+    'wildlife'=>'fa-paw',
+    'hill'=>'fa-mountain',
+    'honeymoon'=>'fa-heart',
+    'adventure'=>'fa-person-hiking',
+    'sightseeing'=>'fa-camera-retro',
+    'leisure'=>'fa-couch',
+    'round-tours'=>'fa-route',
+    'most-popular'=>'fa-fire',
+    'escape-to-wild'=>'fa-tree',
+];
+$catLabel = [
+    'cultural'=>'Cultural',
+    'beach'=>'Beach',
+    'wildlife'=>'Wildlife',
+    'hill'=>'Hill Country',
+    'honeymoon'=>'Honeymoon',
+    'adventure'=>'Adventure',
+    'sightseeing'=>'Sightseeing',
+    'leisure'=>'Leisure',
+    'round-tours'=>'Round Tours',
+    'most-popular'=>'Most Popular',
+    'escape-to-wild'=>'Escape to Wild',
+];
 // DB stores 'hill', filter bar uses 'hillcountry'
-$catFilter= ['cultural'=>'cultural','beach'=>'beach','wildlife'=>'wildlife',
-             'hill'=>'hillcountry','honeymoon'=>'honeymoon','adventure'=>'adventure'];
+$catFilter= [
+    'cultural'=>'cultural',
+    'beach'=>'beach',
+    'wildlife'=>'wildlife',
+    'hill'=>'hillcountry',
+    'honeymoon'=>'honeymoon',
+    'adventure'=>'adventure',
+    'sightseeing'=>'sightseeing',
+    'leisure'=>'leisure',
+    'round-tours'=>'round-tours',
+    'most-popular'=>'most-popular',
+    'escape-to-wild'=>'escape-to-wild',
+];
 
 $badgeClass = ['popular'=>'badge-popular','bestseller'=>'badge-bestseller','new'=>'badge-new',
                'limited'=>'badge-featured','hotdeal'=>'badge-popular'];
@@ -106,11 +139,34 @@ $seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/lo
                 <?php
                 // Only show filter buttons for categories that have packages
                 $usedCats = array_unique(array_column($packages, 'category'));
-                $filterMap = ['cultural','beach','wildlife','hill','honeymoon','adventure'];
-                $filterIcons = ['cultural'=>'fa-landmark','beach'=>'fa-umbrella-beach','wildlife'=>'fa-paw',
-                                'hill'=>'fa-mountain','honeymoon'=>'fa-heart','adventure'=>'fa-person-hiking'];
-                $filterLabels = ['cultural'=>'Cultural','beach'=>'Beach','wildlife'=>'Wildlife',
-                                 'hill'=>'Hill Country','honeymoon'=>'Honeymoon','adventure'=>'Adventure'];
+                $filterMap = ['cultural','beach','wildlife','hill','honeymoon','adventure',
+                              'sightseeing','leisure','round-tours','most-popular','escape-to-wild'];
+                $filterIcons = [
+                    'cultural'=>'fa-landmark',
+                    'beach'=>'fa-umbrella-beach',
+                    'wildlife'=>'fa-paw',
+                    'hill'=>'fa-mountain',
+                    'honeymoon'=>'fa-heart',
+                    'adventure'=>'fa-person-hiking',
+                    'sightseeing'=>'fa-camera-retro',
+                    'leisure'=>'fa-couch',
+                    'round-tours'=>'fa-route',
+                    'most-popular'=>'fa-fire',
+                    'escape-to-wild'=>'fa-tree',
+                ];
+                $filterLabels = [
+                    'cultural'=>'Cultural',
+                    'beach'=>'Beach',
+                    'wildlife'=>'Wildlife',
+                    'hill'=>'Hill Country',
+                    'honeymoon'=>'Honeymoon',
+                    'adventure'=>'Adventure',
+                    'sightseeing'=>'Sightseeing',
+                    'leisure'=>'Leisure',
+                    'round-tours'=>'Round Tours',
+                    'most-popular'=>'Most Popular',
+                    'escape-to-wild'=>'Escape to Wild',
+                ];
                 foreach ($filterMap as $cat):
                     if (!in_array($cat, $usedCats)) continue;
                     $fc = $catFilter[$cat] ?? $cat;
