@@ -305,7 +305,7 @@ include __DIR__ . '/../includes/header.php';
           </button>
         </div>
         <div class="p-3">
-          <div class="form-text mb-3">Add each itinerary stop with a title, description, and 2 photos.</div>
+          <div class="form-text mb-3">Add each itinerary stop with a title and description. Photos are optional.</div>
           <div id="itineraryItems">
             <?php foreach ($itineraryFormItems as $index => $item): ?>
             <div class="itinerary-editor-item" data-index="<?= $index ?>">

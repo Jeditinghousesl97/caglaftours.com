@@ -153,10 +153,6 @@ function nt_save_package_itinerary(PDO $pdo, int $packageId, array $post, array 
             $errors[] = 'Each itinerary stop needs a description.';
         }
 
-        if ($image1 === '' || $image2 === '') {
-            $errors[] = 'Each itinerary stop needs 2 images.';
-        }
-
         $itemsToSave[] = [
             'title' => $title,
             'description' => $description,
