@@ -83,7 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $itinerary    = trim($_POST['itinerary']    ?? '');
     $inclusions   = trim($_POST['inclusions']   ?? '');
     $exclusions   = trim($_POST['exclusions']   ?? '');
-    $destinations = trim($_POST['destinations'] ?? '');
     $badge        = $_POST['badge']             ?? '';
     $best_season  = trim($_POST['best_season']  ?? '');
     $difficulty   = $_POST['difficulty']        ?? 'moderate';
@@ -148,14 +147,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             UPDATE packages SET
               title=?, slug=?, category=?, duration=?, price=?, old_price=?,
               group_size=?, description=?, highlights=?, itinerary=?,
-              inclusions=?, exclusions=?, destinations=?, badge=?, best_season=?,
+              inclusions=?, exclusions=?, badge=?, best_season=?,
               difficulty=?, rating=?, review_count=?, cover_image=?, is_featured=?, is_active=?
             WHERE id=?
         ');
         $stmt->execute([
             $title, $slug, $category, $duration, $price, $old_price,
             $group_size, $description, $highlights, $itinerary,
-            $inclusions, $exclusions, $destinations ?: null, $badge ?: null, $best_season ?: null,
+            $inclusions, $exclusions, $badge ?: null, $best_season ?: null,
             $difficulty, $rating, $review_count,
             $cover_image, $is_featured, $is_active, $id
         ]);
@@ -282,16 +281,6 @@ include __DIR__ . '/../includes/header.php';
         <div class="card-header">Description <span class="text-danger">*</span></div>
         <div class="p-3">
           <textarea name="description" class="form-control" rows="5" required><?= htmlspecialchars($pkg['description']) ?></textarea>
-        </div>
-      </div>
-
-      <div class="admin-card mb-3">
-        <div class="card-header">Destinations
-          <small class="text-muted fw-normal ms-2">One per line, shown as location tags on the card</small>
-        </div>
-        <div class="p-3">
-          <textarea name="destinations" class="form-control" rows="4"
-                    placeholder="Sigiriya&#10;Dambulla&#10;Polonnaruwa&#10;Kandy"><?= htmlspecialchars($pkg['destinations'] ?? '') ?></textarea>
         </div>
       </div>
 
