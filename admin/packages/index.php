@@ -5,6 +5,115 @@ require_once __DIR__ . '/../includes/auth.php';
 
 $pdo = getPDO();
 
+function generateUniquePackageSlug(PDO $pdo, string $baseSlug): string
+{
+    $slug = trim($baseSlug);
+    if ($slug === '') {
+        $slug = 'package-copy';
+    }
+
+    $slug = preg_replace('/[^a-z0-9-]+/i', '-', strtolower($slug)) ?? 'package-copy';
+    $slug = trim($slug, '-') ?: 'package-copy';
+
+    $try = $slug . '-copy';
+    $i = 1;
+    while (true) {
+        $candidate = $i === 1 ? $try : $try . '-' . $i;
+        $chk = $pdo->prepare('SELECT id FROM packages WHERE slug = ? LIMIT 1');
+        $chk->execute([$candidate]);
+        if (!$chk->fetchColumn()) {
+            return $candidate;
+        }
+        $i++;
+    }
+}
+
+// Clone package
+if (isset($_GET['clone'])) {
+    $id = (int)$_GET['clone'];
+    $srcStmt = $pdo->prepare('SELECT * FROM packages WHERE id = ? LIMIT 1');
+    $srcStmt->execute([$id]);
+    $src = $srcStmt->fetch();
+
+    if ($src) {
+        $newSlug = generateUniquePackageSlug($pdo, (string)$src['slug']);
+        $newTitle = rtrim((string)$src['title']) . ' (Copy)';
+
+        try {
+            $pdo->beginTransaction();
+
+            $insert = $pdo->prepare('
+                INSERT INTO packages
+                  (title, slug, category, badge, duration, price, old_price, group_size,
+                   difficulty, best_season, rating, review_count, description, highlights,
+                   itinerary, inclusions, exclusions, destinations, cover_image, is_featured, is_active)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            ');
+            $insert->execute([
+                $newTitle,
+                $newSlug,
+                $src['category'],
+                $src['badge'],
+                $src['duration'],
+                $src['price'],
+                $src['old_price'],
+                $src['group_size'],
+                $src['difficulty'],
+                $src['best_season'],
+                $src['rating'],
+                $src['review_count'],
+                $src['description'],
+                $src['highlights'],
+                $src['itinerary'],
+                $src['inclusions'],
+                $src['exclusions'],
+                $src['destinations'],
+                $src['cover_image'],
+                $src['is_featured'],
+                $src['is_active']
+            ]);
+
+            $newPackageId = (int)$pdo->lastInsertId();
+
+            $itineraryItems = $pdo->prepare('SELECT * FROM package_itinerary_items WHERE package_id = ? ORDER BY sort_order ASC, id ASC');
+            $itineraryItems->execute([$id]);
+            $items = $itineraryItems->fetchAll();
+
+            if ($items) {
+                $insertItem = $pdo->prepare('
+                    INSERT INTO package_itinerary_items
+                      (package_id, day_number, title, description, image_1, image_2, sort_order)
+                    VALUES (?,?,?,?,?,?,?)
+                ');
+                foreach ($items as $item) {
+                    $insertItem->execute([
+                        $newPackageId,
+                        $item['day_number'],
+                        $item['title'],
+                        $item['description'],
+                        $item['image_1'],
+                        $item['image_2'],
+                        $item['sort_order'],
+                    ]);
+                }
+            }
+
+            $pdo->commit();
+            header('Location: index.php?cloned=1');
+            exit;
+        } catch (Throwable $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+            header('Location: index.php?clone_failed=1');
+            exit;
+        }
+    }
+
+    header('Location: index.php?clone_failed=1');
+    exit;
+}
+
 // Toggle active
 if (isset($_GET['toggle_active'])) {
     $id  = (int)$_GET['toggle_active'];
@@ -82,6 +191,16 @@ include __DIR__ . '/../includes/header.php';
 <?php elseif (isset($_GET['deleted'])): ?>
   <div class="alert alert-success alert-dismissible fade show">
     <i class="bi bi-check-circle me-1"></i> Package deleted successfully.
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<?php elseif (isset($_GET['cloned'])): ?>
+  <div class="alert alert-success alert-dismissible fade show">
+    <i class="bi bi-check-circle me-1"></i> Package cloned successfully.
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+<?php elseif (isset($_GET['clone_failed'])): ?>
+  <div class="alert alert-danger alert-dismissible fade show">
+    <i class="bi bi-exclamation-triangle me-1"></i> Package clone failed.
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   </div>
 <?php endif; ?>
@@ -190,6 +309,10 @@ include __DIR__ . '/../includes/header.php';
                   </a>
                   <a href="edit.php?id=<?= $pkg['id'] ?>" class="btn btn-sm btn-outline-primary" title="Edit">
                     <i class="bi bi-pencil"></i>
+                  </a>
+                  <a href="index.php?clone=<?= $pkg['id'] ?>" class="btn btn-sm btn-outline-info" title="Clone"
+                     onclick="return confirm('Clone this package?')">
+                    <i class="bi bi-files"></i>
                   </a>
                   <a href="delete.php?id=<?= $pkg['id'] ?>" class="btn btn-sm btn-outline-danger" title="Delete"
                      onclick="return confirm('Delete this package?')">
