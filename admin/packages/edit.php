@@ -42,6 +42,17 @@ function ensurePackagePriceColumnAllowsNull(PDO $pdo, array &$errors): bool
     return true;
 }
 
+function ensurePackageCategoryEnum(PDO $pdo, array $categories, array &$errors): bool
+{
+    $categoryKeys = array_keys($categories);
+    if (ensureEnumColumnValues($pdo, 'packages', 'category', $categoryKeys)) {
+        return true;
+    }
+
+    $errors[] = 'Package category list could not be synced with database. Please check packages.category ENUM values.';
+    return false;
+}
+
 function sanitizePackageDescriptionHtml(string $html): string
 {
     // Remove executable/style blocks first.
@@ -105,6 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($slug === '')     $errors[] = 'Slug is required.';
     if ($category === '') $errors[] = 'Category is required.';
     if ($duration === '') $errors[] = 'Duration is required.';
+    if ($category !== '' && !array_key_exists($category, $categories)) {
+        $errors[] = 'Selected category is invalid.';
+    }
     if ($description === '') $errors[] = 'Description is required.';
 
     // Slug unique (excluding self)
@@ -152,7 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cover_image = null;
     }
 
-    if (empty($errors) && ensurePackagePriceColumnAllowsNull($pdo, $errors)) {
+    if (
+        empty($errors)
+        && ensurePackagePriceColumnAllowsNull($pdo, $errors)
+        && ensurePackageCategoryEnum($pdo, $categories, $errors)
+    ) {
         $stmt = $pdo->prepare('
             UPDATE packages SET
               title=?, slug=?, category=?, duration=?, price=?, old_price=?,

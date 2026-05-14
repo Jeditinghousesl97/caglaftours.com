@@ -71,6 +71,17 @@ function ensurePackagePriceColumnAllowsNull(PDO $pdo, array &$errors): bool
     return true;
 }
 
+function ensurePackageCategoryEnum(PDO $pdo, array $categories, array &$errors): bool
+{
+    $categoryKeys = array_keys($categories);
+    if (ensureEnumColumnValues($pdo, 'packages', 'category', $categoryKeys)) {
+        return true;
+    }
+
+    $errors[] = 'Package category list could not be synced with database. Please check packages.category ENUM values.';
+    return false;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title    = trim($_POST['title'] ?? '');
     $slug     = trim($_POST['slug'] ?? '');
@@ -97,6 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($slug === '')     $errors[] = 'Slug is required.';
     if ($category === '') $errors[] = 'Category is required.';
     if ($duration === '') $errors[] = 'Duration is required.';
+    if ($category !== '' && !array_key_exists($category, $categories)) {
+        $errors[] = 'Selected category is invalid.';
+    }
     if ($description === '') $errors[] = 'Description is required.';
 
     // Check slug unique
@@ -130,7 +144,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (empty($errors) && ensurePackagePriceColumnAllowsNull($pdo, $errors)) {
+    if (
+        empty($errors)
+        && ensurePackagePriceColumnAllowsNull($pdo, $errors)
+        && ensurePackageCategoryEnum($pdo, $categories, $errors)
+    ) {
         $stmt = $pdo->prepare('
             INSERT INTO packages
               (title, slug, category, duration, price, old_price, group_size,
