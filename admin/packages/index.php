@@ -173,9 +173,17 @@ include __DIR__ . '/../includes/header.php';
 
 <div class="page-header">
   <h1><i class="bi bi-suitcase-lg me-2 text-primary"></i>Tour Packages</h1>
-  <a href="create.php" class="btn btn-primary">
-    <i class="bi bi-plus-lg me-1"></i> Add Package
-  </a>
+  <div class="d-flex gap-2">
+    <a href="export.php" class="btn btn-outline-success">
+      <i class="bi bi-download me-1"></i> Export Packages
+    </a>
+    <a href="import.php" class="btn btn-outline-primary">
+      <i class="bi bi-upload me-1"></i> Import Packages
+    </a>
+    <a href="create.php" class="btn btn-primary">
+      <i class="bi bi-plus-lg me-1"></i> Add Package
+    </a>
+  </div>
 </div>
 
 <?php if (isset($_GET['created'])): ?>
