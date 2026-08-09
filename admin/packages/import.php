@@ -19,7 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $extension = strtolower(pathinfo((string)($file['name'] ?? ''), PATHINFO_EXTENSION));
         if ($extension === 'zip') {
             $zip = new ZipArchive();
-            if ($zip->open($file['tmp_name']) !== true || $zip->locateName('manifest.json') === false) {
+            $zipResult = $zip->open($file['tmp_name']);
+            // PHP versions may return true or integer 0 for a successful open.
+            if (($zipResult !== true && $zipResult !== 0) || $zip->locateName('manifest.json') === false) {
                 $errors[] = 'This ZIP does not contain a valid package export manifest.';
             } else {
                 $json = $zip->getFromName('manifest.json');
@@ -117,3 +119,5 @@ include __DIR__ . '/../includes/header.php';
   </form>
 </div>
 <?php include __DIR__ . '/../includes/footer.php'; ?>
+
+
