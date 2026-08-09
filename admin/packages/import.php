@@ -14,13 +14,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ((int)$file['size'] > 250 * 1024 * 1024) {
         $errors[] = 'The import file must be under 250MB.';
     } else {
-        $json = file_get_contents($file['tmp_name']);
-        $payload = json_decode((string)$json, true);
-        if (!is_array($payload) || $payload['format'] !== 'caglaf-tour-packages' || (int)$payload['version'] !== PACKAGE_TRANSFER_VERSION) {
-            $errors[] = 'This is not a valid CAGLAF Tours package export file.';
-        } elseif (!is_array($payload['packages'] ?? null)) {
-            $errors[] = 'The export file does not contain any packages.';
+        $json = null;
+        $zip = null;
+        $extension = strtolower(pathinfo((string)($file['name'] ?? ''), PATHINFO_EXTENSION));
+        if ($extension === 'zip') {
+            $zip = new ZipArchive();
+            if ($zip->open($file['tmp_name']) !== true || $zip->locateName('manifest.json') === false) {
+                $errors[] = 'This ZIP does not contain a valid package export manifest.';
+            } else {
+                $json = $zip->getFromName('manifest.json');
+            }
         } else {
+            $json = file_get_contents($file['tmp_name']);
+        }
+        $payload = json_decode((string)$json, true);
+        if (!$errors && (!is_array($payload) || ($payload['format'] ?? '') !== 'caglaf-tour-packages' || (int)($payload['version'] ?? 0) !== PACKAGE_TRANSFER_VERSION)) {
+            $errors[] = 'This is not a valid CAGLAF Tours package export file.';
+        } elseif (!$errors && !is_array($payload['packages'] ?? null)) {
+            $errors[] = 'The export file does not contain any packages.';
+        } elseif (!$errors) {
+            if ($zip instanceof ZipArchive) {
+                foreach ($payload['packages'] as &$package) {
+                    foreach ($package['itinerary_items'] ?? [] as &$item) {
+                        foreach (['image_1_data', 'image_2_data'] as $field) {
+                            if (!empty($item[$field]['file'])) {
+                                $item[$field]['data'] = base64_encode((string)$zip->getFromName($item[$field]['file']));
+                            }
+                        }
+                    }
+                    unset($item);
+                    if (!empty($package['cover_image_data']['file'])) {
+                        $package['cover_image_data']['data'] = base64_encode((string)$zip->getFromName($package['cover_image_data']['file']));
+                    }
+                }
+                unset($package);
+                $zip->close();
+            }
             $pdo = getPDO();
             $createdFiles = [];
             try {
@@ -80,10 +109,10 @@ include __DIR__ . '/../includes/header.php';
 <?php if ($imported > 0): ?><div class="alert alert-success"><i class="bi bi-check-circle me-1"></i><?= $imported ?> package(s) imported. Existing packages were not changed or removed.</div><?php endif; ?>
 <?php if ($errors): ?><div class="alert alert-danger"><ul class="mb-0 ps-3"><?php foreach ($errors as $error): ?><li><?= htmlspecialchars($error) ?></li><?php endforeach; ?></ul></div><?php endif; ?>
 <div class="admin-card p-4">
-  <p>Select a JSON file exported from this website. Package cover and itinerary images are included in the file.</p>
+  <p>Select a ZIP file exported from this website. Package data, cover images, and itinerary images are included in the file.</p>
   <p class="text-muted small">Imports are additive only. Duplicate slugs are automatically renamed, and existing packages are never overwritten.</p>
   <form method="POST" enctype="multipart/form-data">
-    <input type="file" name="package_file" class="form-control mb-3" accept=".json,application/json" required>
+    <input type="file" name="package_file" class="form-control mb-3" accept=".zip,.json,application/zip,application/json" required>
     <button type="submit" class="btn btn-primary"><i class="bi bi-upload me-1"></i>Import Packages</button>
   </form>
 </div>
