@@ -7,7 +7,10 @@ require_once __DIR__ . '/package-transfer.php';
 $payload = packageTransferExport(getPDO());
 $tempFile = tempnam(sys_get_temp_dir(), 'caglaf_export_');
 $zip = new ZipArchive();
-if ($tempFile === false || $zip->open($tempFile, ZipArchive::OVERWRITE) !== true) {
+if ($tempFile !== false && is_file($tempFile)) {
+    unlink($tempFile);
+}
+if ($tempFile === false || $zip->open($tempFile, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
     http_response_code(500);
     exit('Could not create the export ZIP file.');
 }
@@ -40,6 +43,7 @@ $filename = 'caglaf-tour-packages-' . date('Y-m-d-His') . '.zip';
 header('Content-Type: application/zip');
 header('Content-Disposition: attachment; filename="' . $filename . '"');
 header('Content-Length: ' . filesize($tempFile));
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('X-Content-Type-Options: nosniff');
 readfile($tempFile);
 unlink($tempFile);

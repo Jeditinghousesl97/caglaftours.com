@@ -174,7 +174,7 @@ include __DIR__ . '/../includes/header.php';
 <div class="page-header">
   <h1><i class="bi bi-suitcase-lg me-2 text-primary"></i>Tour Packages</h1>
   <div class="d-flex gap-2">
-    <a href="export.php" class="btn btn-outline-success">
+    <a href="export.php?format=zip&amp;v=<?= time() ?>" class="btn btn-outline-success">
       <i class="bi bi-download me-1"></i> Export Packages
     </a>
     <a href="import.php" class="btn btn-outline-primary">
