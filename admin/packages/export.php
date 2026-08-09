@@ -48,3 +48,4 @@ header('X-Content-Type-Options: nosniff');
 readfile($tempFile);
 unlink($tempFile);
 exit;
+
