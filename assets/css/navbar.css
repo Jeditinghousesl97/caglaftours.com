@@ -210,6 +210,74 @@
     font-size: 0.875rem;
 }
 
+/* Google Translate language control */
+.language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 118px;
+    padding: 7px 8px;
+    color: var(--white);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius-xs);
+}
+
+.language-switcher > i {
+    color: var(--accent);
+    font-size: 0.82rem;
+}
+
+.language-switcher .goog-te-gadget {
+    color: transparent;
+    font-family: var(--font-body);
+    font-size: 0;
+    line-height: 1;
+}
+
+.language-switcher .goog-te-gadget > span,
+.language-switcher .goog-te-gadget > a {
+    display: none;
+}
+
+.language-switcher .goog-te-combo {
+    width: 88px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    color: var(--white);
+    background: transparent;
+    font: 500 0.78rem/1.2 var(--font-body);
+    cursor: pointer;
+}
+
+.language-switcher .goog-te-combo option {
+    color: #1f2937;
+    background: #fff;
+}
+
+.language-switcher.translation-unavailable {
+    display: none;
+}
+
+/* Prevent the legacy Google banner from shifting this fixed-header layout. */
+iframe.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+}
+
+body {
+    top: 0 !important;
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .nav-container { gap: 12px; }
+    .nav-link { padding-right: 8px; padding-left: 8px; }
+    .nav-actions { gap: 8px; }
+    .nav-btn { padding-right: 14px; padding-left: 14px; }
+}
+
 /* Hamburger */
 .hamburger {
     display: none;

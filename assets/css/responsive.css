@@ -55,6 +55,13 @@
 
     .nav-btn { display: none; }
 
+    .language-switcher {
+        min-width: 112px;
+        padding: 7px 6px;
+    }
+
+    .language-switcher .goog-te-combo { width: 84px; }
+
     /* Hero */
     .hero-content h1 { font-size: 2.2rem; }
 

@@ -123,6 +123,10 @@
             <a href="${BASE}pages/packages.php" class="btn btn-primary nav-btn">
                 <i class="fa-solid fa-paper-plane"></i> Book Now
             </a>
+            <div class="language-switcher notranslate" translate="no">
+                <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                <div id="google_translate_element" aria-label="Choose website language"></div>
+            </div>
             <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
                 <span></span>
                 <span></span>
@@ -303,6 +307,45 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
         });
     }
 
+    /**
+     * Load Google's Website Translator after the shared navigation exists.
+     * Google supplies the complete language list and remembers a visitor's
+     * selection with its own cookie, so the choice continues across pages.
+     */
+    function initGoogleTranslate() {
+        const target = document.getElementById('google_translate_element');
+        if (!target || target.dataset.initialized === 'true') return;
+
+        target.dataset.initialized = 'true';
+
+        window.googleTranslateElementInit = function () {
+            if (!window.google || !window.google.translate || !window.google.translate.TranslateElement) return;
+
+            new window.google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false
+            }, 'google_translate_element');
+        };
+
+        // Do not add the external script twice if another page script already loaded it.
+        if (window.google && window.google.translate && window.google.translate.TranslateElement) {
+            window.googleTranslateElementInit();
+            return;
+        }
+
+        const existingScript = document.querySelector('script[data-google-translate]');
+        if (existingScript) return;
+
+        const script = document.createElement('script');
+        script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        script.async = true;
+        script.dataset.googleTranslate = 'true';
+        script.onerror = function () {
+            target.closest('.language-switcher')?.classList.add('translation-unavailable');
+        };
+        document.head.appendChild(script);
+    }
+
     // Boot
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -310,6 +353,7 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
             setActiveNav();
             solidifyNavOnInnerPages();
             if (typeof initNavbar === 'function') initNavbar();
+            initGoogleTranslate();
         });
 
         injectComponent('footer-placeholder', getFooterHTML(), () => {
