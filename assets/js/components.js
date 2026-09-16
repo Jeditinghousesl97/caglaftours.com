@@ -123,10 +123,6 @@
             <a href="${BASE}pages/packages.php" class="btn btn-primary nav-btn">
                 <i class="fa-solid fa-paper-plane"></i> Book Now
             </a>
-            <div class="language-switcher notranslate" translate="no">
-                <i class="fa-solid fa-globe" aria-hidden="true"></i>
-                <div id="google_translate_element" aria-label="Choose website language"></div>
-            </div>
             <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
                 <span></span>
                 <span></span>
@@ -261,13 +257,35 @@
         }
     }
 
-    // Floating buttons (WhatsApp + Scroll-to-top) 
+    // Floating buttons (Language + WhatsApp + Scroll-to-top)
     function injectFloatingButtons() {
         const waNum = getSetting('wa-number');
 
         const html = `
+<button id="language-launcher" class="notranslate" translate="no" aria-label="Choose website language" aria-controls="language-panel" aria-expanded="false">
+    <i class="fa-solid fa-globe" aria-hidden="true"></i><span id="language-current-code">EN</span>
+</button>
 ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>` : ''}
 <button id="float-top" aria-label="Back to top" title="Back to top"><i class="fa fa-chevron-up"></i></button>
+<section id="language-panel" class="language-panel notranslate" translate="no" aria-hidden="true" aria-label="Choose website language">
+    <div class="language-panel-content" role="dialog" aria-modal="true" aria-labelledby="language-panel-title">
+        <header class="language-panel-header">
+            <div>
+                <span class="language-panel-eyebrow"><i class="fa-solid fa-earth-americas" aria-hidden="true"></i> CAGLAF Tours</span>
+                <h2 id="language-panel-title">Choose your language</h2>
+                <p>Explore Sri Lanka in the language that feels most natural to you.</p>
+            </div>
+            <button id="language-panel-close" class="language-panel-close" type="button" aria-label="Close language menu"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </header>
+        <label class="language-search" for="language-search-input">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input id="language-search-input" type="search" placeholder="Search languages" autocomplete="off">
+        </label>
+        <div class="language-results-bar"><span id="language-results-count">Loading languages…</span><span>Google Translate</span></div>
+        <div id="language-grid" class="language-grid" role="list"></div>
+        <div id="google_translate_element" class="google-translate-source" aria-hidden="true"></div>
+    </div>
+</section>
 <style>
 #float-wa {
     position: fixed; bottom: 28px; left: 24px; z-index: 9999;
@@ -305,6 +323,94 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
         document.getElementById('float-top')?.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+
+        initLanguagePicker();
+    }
+
+    const LANGUAGE_FLAGS = {
+        af:'🇿🇦', sq:'🇦🇱', am:'🇪🇹', ar:'🇸🇦', hy:'🇦🇲', as:'🇮🇳', ay:'🇧🇴', az:'🇦🇿', bm:'🇲🇱', eu:'🇪🇸', be:'🇧🇾', bn:'🇧🇩', bho:'🇮🇳', bs:'🇧🇦', bg:'🇧🇬', ca:'🇪🇸', ceb:'🇵🇭', 'zh-CN':'🇨🇳', 'zh-TW':'🇹🇼', co:'🇫🇷', hr:'🇭🇷', cs:'🇨🇿', da:'🇩🇰', dv:'🇲🇻', doi:'🇮🇳', nl:'🇳🇱', eo:'🌐', et:'🇪🇪', ee:'🇬🇭', fil:'🇵🇭', fi:'🇫🇮', fr:'🇫🇷', fy:'🇳🇱', gl:'🇪🇸', ka:'🇬🇪', de:'🇩🇪', el:'🇬🇷', gn:'🇵🇾', gu:'🇮🇳', ht:'🇭🇹', ha:'🇳🇬', haw:'🇺🇸', he:'🇮🇱', hi:'🇮🇳', hmn:'🇨🇳', hu:'🇭🇺', is:'🇮🇸', ig:'🇳🇬', ilo:'🇵🇭', id:'🇮🇩', ga:'🇮🇪', it:'🇮🇹', ja:'🇯🇵', jv:'🇮🇩', kn:'🇮🇳', kk:'🇰🇿', km:'🇰🇭', rw:'🇷🇼', gom:'🇮🇳', ko:'🇰🇷', kri:'🇸🇱', ku:'🇮🇶', ckb:'🇮🇶', ky:'🇰🇬', lo:'🇱🇦', la:'🇻🇦', lv:'🇱🇻', ln:'🇨🇩', lt:'🇱🇹', lg:'🇺🇬', lb:'🇱🇺', mk:'🇲🇰', mai:'🇮🇳', mg:'🇲🇬', ms:'🇲🇾', ml:'🇮🇳', mt:'🇲🇹', mi:'🇳🇿', mr:'🇮🇳', 'mni-Mtei':'🇮🇳', lus:'🇮🇳', mn:'🇲🇳', my:'🇲🇲', ne:'🇳🇵', no:'🇳🇴', ny:'🇲🇼', or:'🇮🇳', om:'🇪🇹', ps:'🇦🇫', fa:'🇮🇷', pl:'🇵🇱', pt:'🇵🇹', pa:'🇮🇳', qu:'🇵🇪', ro:'🇷🇴', ru:'🇷🇺', sm:'🇼🇸', sa:'🇮🇳', gd:'🏴', nso:'🇿🇦', sr:'🇷🇸', st:'🇱🇸', sn:'🇿🇼', sd:'🇵🇰', si:'🇱🇰', sk:'🇸🇰', sl:'🇸🇮', so:'🇸🇴', es:'🇪🇸', su:'🇮🇩', sw:'🇹🇿', sv:'🇸🇪', tg:'🇹🇯', ta:'🇮🇳', tt:'🇷🇺', te:'🇮🇳', th:'🇹🇭', ti:'🇪🇹', ts:'🇿🇦', tr:'🇹🇷', tk:'🇹🇲', ak:'🇬🇭', uk:'🇺🇦', ur:'🇵🇰', ug:'🇨🇳', uz:'🇺🇿', vi:'🇻🇳', cy:'🏴', xh:'🇿🇦', yi:'🇮🇱', yo:'🇳🇬', zu:'🇿🇦'
+    };
+
+    function initLanguagePicker() {
+        const launcher = document.getElementById('language-launcher');
+        const panel = document.getElementById('language-panel');
+        const closeButton = document.getElementById('language-panel-close');
+        const search = document.getElementById('language-search-input');
+        if (!launcher || !panel || launcher.dataset.initialized === 'true') return;
+
+        launcher.dataset.initialized = 'true';
+        const closePanel = () => {
+            panel.classList.remove('open');
+            panel.setAttribute('aria-hidden', 'true');
+            launcher.setAttribute('aria-expanded', 'false');
+            document.body.classList.remove('language-panel-open');
+            launcher.focus();
+        };
+
+        launcher.addEventListener('click', () => {
+            panel.classList.add('open');
+            panel.setAttribute('aria-hidden', 'false');
+            launcher.setAttribute('aria-expanded', 'true');
+            document.body.classList.add('language-panel-open');
+            search?.focus();
+        });
+        closeButton?.addEventListener('click', closePanel);
+        panel.addEventListener('click', event => { if (event.target === panel) closePanel(); });
+        document.addEventListener('keydown', event => { if (event.key === 'Escape' && panel.classList.contains('open')) closePanel(); });
+        search?.addEventListener('input', () => filterLanguages(search.value));
+    }
+
+    function filterLanguages(query = '') {
+        const normalizedQuery = query.trim().toLocaleLowerCase();
+        const buttons = [...document.querySelectorAll('.language-option')];
+        let visibleCount = 0;
+        buttons.forEach(button => {
+            const visible = !normalizedQuery || button.dataset.search.includes(normalizedQuery);
+            button.hidden = !visible;
+            if (visible) visibleCount += 1;
+        });
+        const count = document.getElementById('language-results-count');
+        if (count) count.textContent = `${visibleCount} language${visibleCount === 1 ? '' : 's'} available`;
+    }
+
+    function buildLanguageMenu(attempt = 0) {
+        const source = document.querySelector('#google_translate_element .goog-te-combo');
+        const grid = document.getElementById('language-grid');
+        if (!grid || grid.dataset.ready === 'true') return;
+        if (!source) {
+            if (attempt < 20) window.setTimeout(() => buildLanguageMenu(attempt + 1), 100);
+            return;
+        }
+
+        const languages = [...source.options]
+            .filter(option => option.value)
+            .map(option => ({ code: option.value, name: option.text.trim(), flag: LANGUAGE_FLAGS[option.value] || '🌐' }))
+            .sort((a, b) => a.name.localeCompare(b.name));
+
+        grid.innerHTML = languages.map(language => `
+            <button class="language-option" type="button" role="listitem" data-language="${language.code}" data-search="${escapeHTML(`${language.name} ${language.code}`.toLocaleLowerCase())}">
+                <span class="language-flag" aria-hidden="true">${language.flag}</span><span>${escapeHTML(language.name)}</span>
+            </button>`).join('');
+        grid.dataset.ready = 'true';
+
+        const currentCode = source.value || 'en';
+        updateLanguageSelection(currentCode);
+        filterLanguages();
+
+        grid.addEventListener('click', event => {
+            const button = event.target.closest('.language-option');
+            if (!button) return;
+            const language = button.dataset.language;
+            source.value = language;
+            source.dispatchEvent(new Event('change'));
+            updateLanguageSelection(language);
+            document.getElementById('language-panel-close')?.click();
+        });
+    }
+
+    function updateLanguageSelection(code) {
+        document.getElementById('language-current-code').textContent = code === 'en' ? 'EN' : code.split('-')[0].toUpperCase();
+        document.querySelectorAll('.language-option').forEach(option => option.classList.toggle('selected', option.dataset.language === code));
     }
 
     /**
@@ -325,6 +431,7 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
                 pageLanguage: 'en',
                 autoDisplay: false
             }, 'google_translate_element');
+            buildLanguageMenu();
         };
 
         // Do not add the external script twice if another page script already loaded it.
@@ -341,7 +448,7 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
         script.async = true;
         script.dataset.googleTranslate = 'true';
         script.onerror = function () {
-            target.closest('.language-switcher')?.classList.add('translation-unavailable');
+            document.getElementById('language-launcher')?.classList.add('translation-unavailable');
         };
         document.head.appendChild(script);
     }
