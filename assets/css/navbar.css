@@ -356,7 +356,20 @@
     text-transform: uppercase;
 }
 
+.language-results-bar > div { display: flex; align-items: center; gap: 18px; }
+.language-reset {
+    padding: 7px 11px;
+    border: 1px solid rgba(144, 224, 239, 0.42);
+    border-radius: 999px;
+    color: var(--accent);
+    background: rgba(0, 180, 216, 0.1);
+    font: 600 0.72rem/1 var(--font-body);
+    cursor: pointer;
+}
+.language-reset:hover { background: rgba(0, 180, 216, 0.22); }
+
 .language-grid {
+    flex: 1 1 auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     align-content: start;
@@ -383,6 +396,8 @@
     transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
 
+.language-option[hidden] { display: none !important; }
+
 .language-option:hover,
 .language-option.selected {
     border-color: rgba(144, 224, 239, 0.78);
@@ -398,7 +413,8 @@
     content: '\f00c';
 }
 
-.language-flag { flex: 0 0 auto; font-size: 1.35rem; line-height: 1; }
+.language-flag { display: inline-grid; width: 22px; flex: 0 0 22px; place-items: center; color: var(--accent); font-size: 1rem; line-height: 1; }
+.language-flag img { width: 20px; height: 15px; object-fit: cover; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.25); }
 .google-translate-source { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 body.language-panel-open { overflow: hidden !important; }
 
@@ -413,14 +429,17 @@ body {
 }
 
 @media (max-width: 767px) {
-    #language-launcher { right: 18px; bottom: 84px; min-width: 68px; height: 43px; padding: 0 12px; }
+    #language-launcher { left: 50%; right: auto; bottom: max(18px, env(safe-area-inset-bottom)); min-width: 68px; height: 43px; padding: 0 12px; transform: translateX(-50%); z-index: 10020; }
+    #language-launcher:hover { transform: translateX(-50%) translateY(-3px); }
     .language-panel-content { padding: 26px 18px 18px; }
     .language-panel-header { margin-bottom: 22px; }
     .language-panel-header h2 { margin-top: 8px; font-size: 2rem; }
     .language-panel-header p { font-size: 0.82rem; }
     .language-panel-close { width: 42px; height: 42px; }
     .language-search input { height: 50px; }
-    .language-results-bar { margin-top: 17px; }
+    .language-results-bar { margin-top: 17px; font-size: 0.66rem; }
+    .language-results-bar > div { gap: 8px; }
+    .language-reset { padding: 6px 8px; font-size: 0.62rem; }
     .language-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding-right: 2px; }
     .language-option { gap: 8px; padding: 12px 10px; font-size: 0.78rem; }
     .language-flag { font-size: 1.12rem; }

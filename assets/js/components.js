@@ -281,7 +281,7 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
             <input id="language-search-input" type="search" placeholder="Search languages" autocomplete="off">
         </label>
-        <div class="language-results-bar"><span id="language-results-count">Loading languages…</span><span>Google Translate</span></div>
+        <div class="language-results-bar"><span id="language-results-count">Loading languages…</span><div><button id="language-reset" class="language-reset" type="button"><i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i> Reset to English</button><span>Google Translate</span></div></div>
         <div id="language-grid" class="language-grid" role="list"></div>
         <div id="google_translate_element" class="google-translate-source" aria-hidden="true"></div>
     </div>
@@ -334,11 +334,19 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
         af:'🇿🇦', sq:'🇦🇱', am:'🇪🇹', ar:'🇸🇦', hy:'🇦🇲', as:'🇮🇳', ay:'🇧🇴', az:'🇦🇿', bm:'🇲🇱', eu:'🇪🇸', be:'🇧🇾', bn:'🇧🇩', bho:'🇮🇳', bs:'🇧🇦', bg:'🇧🇬', ca:'🇪🇸', ceb:'🇵🇭', 'zh-CN':'🇨🇳', 'zh-TW':'🇹🇼', co:'🇫🇷', hr:'🇭🇷', cs:'🇨🇿', da:'🇩🇰', dv:'🇲🇻', doi:'🇮🇳', nl:'🇳🇱', eo:'🌐', et:'🇪🇪', ee:'🇬🇭', fil:'🇵🇭', fi:'🇫🇮', fr:'🇫🇷', fy:'🇳🇱', gl:'🇪🇸', ka:'🇬🇪', de:'🇩🇪', el:'🇬🇷', gn:'🇵🇾', gu:'🇮🇳', ht:'🇭🇹', ha:'🇳🇬', haw:'🇺🇸', he:'🇮🇱', hi:'🇮🇳', hmn:'🇨🇳', hu:'🇭🇺', is:'🇮🇸', ig:'🇳🇬', ilo:'🇵🇭', id:'🇮🇩', ga:'🇮🇪', it:'🇮🇹', ja:'🇯🇵', jv:'🇮🇩', kn:'🇮🇳', kk:'🇰🇿', km:'🇰🇭', rw:'🇷🇼', gom:'🇮🇳', ko:'🇰🇷', kri:'🇸🇱', ku:'🇮🇶', ckb:'🇮🇶', ky:'🇰🇬', lo:'🇱🇦', la:'🇻🇦', lv:'🇱🇻', ln:'🇨🇩', lt:'🇱🇹', lg:'🇺🇬', lb:'🇱🇺', mk:'🇲🇰', mai:'🇮🇳', mg:'🇲🇬', ms:'🇲🇾', ml:'🇮🇳', mt:'🇲🇹', mi:'🇳🇿', mr:'🇮🇳', 'mni-Mtei':'🇮🇳', lus:'🇮🇳', mn:'🇲🇳', my:'🇲🇲', ne:'🇳🇵', no:'🇳🇴', ny:'🇲🇼', or:'🇮🇳', om:'🇪🇹', ps:'🇦🇫', fa:'🇮🇷', pl:'🇵🇱', pt:'🇵🇹', pa:'🇮🇳', qu:'🇵🇪', ro:'🇷🇴', ru:'🇷🇺', sm:'🇼🇸', sa:'🇮🇳', gd:'🏴', nso:'🇿🇦', sr:'🇷🇸', st:'🇱🇸', sn:'🇿🇼', sd:'🇵🇰', si:'🇱🇰', sk:'🇸🇰', sl:'🇸🇮', so:'🇸🇴', es:'🇪🇸', su:'🇮🇩', sw:'🇹🇿', sv:'🇸🇪', tg:'🇹🇯', ta:'🇮🇳', tt:'🇷🇺', te:'🇮🇳', th:'🇹🇭', ti:'🇪🇹', ts:'🇿🇦', tr:'🇹🇷', tk:'🇹🇲', ak:'🇬🇭', uk:'🇺🇦', ur:'🇵🇰', ug:'🇨🇳', uz:'🇺🇿', vi:'🇻🇳', cy:'🏴', xh:'🇿🇦', yi:'🇮🇱', yo:'🇳🇬', zu:'🇿🇦'
     };
 
+    // ISO country codes used by the flag image service. A language can be used
+    // in several countries, so these represent its most recognisable locale.
+    const LANGUAGE_COUNTRIES = {
+        ab:'ge', ace:'id', ach:'ug', aa:'et', af:'za', sq:'al', alr:'ru', am:'et', ar:'sa', hy:'am', as:'in', av:'ru', awa:'in', ay:'bo', az:'az', ba:'ru', ban:'id', bal:'pk', bm:'ml', bci:'ci', be:'by', bem:'zm', bn:'bd', bew:'id', bho:'in', bik:'ph', bs:'ba', br:'fr', bg:'bg', bua:'ru', ca:'es', ceb:'ph', ch:'gu', ce:'ru', ny:'mw',
+        'zh-CN':'cn', 'zh-TW':'tw', ckt:'ru', cv:'ru', co:'fr', crh:'ua', hr:'hr', cs:'cz', da:'dk', fa:'ir', nl:'nl', dv:'mv', doi:'in', dyu:'bf', dz:'bt', en:'gb', eo:'un', et:'ee', ee:'gh', fo:'fo', fj:'fj', fil:'ph', fi:'fi', fr:'fr', fy:'nl', ff:'sn', gaa:'gh', gl:'es', ka:'ge', de:'de', el:'gr', gn:'py', gu:'in', ht:'ht', ha:'ng', haw:'us', he:'il', hi:'in', hmn:'cn', hu:'hu', is:'is', ig:'ng', ilo:'ph', id:'id', ga:'ie', it:'it', ja:'jp', jv:'id', kl:'gl', kn:'in', kr:'ng', pam:'ph', kk:'kz', km:'kh', kmb:'ao', rw:'rw', kg:'cd', ko:'kr', kri:'sl', ku:'iq', ckb:'iq', ky:'kg', lo:'la', lv:'lv', lij:'it', li:'nl', ln:'cd', lt:'lt', lmo:'it', lg:'ug', luo:'ke', lb:'lu', mk:'mk', mad:'id', mai:'in', mak:'id', mg:'mg', ms:'my', ml:'in', mt:'mt', mam:'gt', gv:'im', mi:'nz', mr:'in', mh:'mh', mwr:'in', mfe:'mu', 'mni-Mtei':'in', min:'id', lus:'in', mn:'mn', my:'mm', nr:'za', new:'np', ne:'np', nso:'za', no:'no', nus:'ss', oc:'fr', or:'in', om:'et', os:'ge', pag:'ph', pap:'aw', ps:'af', pl:'pl', pt:'pt', pa:'in', qu:'pe', rom:'ro', ro:'ro', rn:'bi', ru:'ru', sm:'ws', sg:'cf', sa:'in', sat:'in', gd:'gb', sr:'rs', st:'ls', crs:'sc', shn:'mm', sn:'zw', scn:'it', szl:'pl', sd:'pk', si:'lk', sk:'sk', sl:'si', so:'so', es:'es', su:'id', sus:'gn', sw:'tz', ss:'sz', sv:'se', ty:'pf', tg:'tj', ber:'ma', ta:'in', tt:'ru', te:'in', tet:'tl', th:'th', bo:'cn', ti:'et', tiv:'ng', tpi:'pg', to:'to', lua:'cd', ts:'za', tn:'bw', tr:'tr', tk:'tm', tw:'gh', udm:'ru', uk:'ua', ur:'pk', ug:'cn', uz:'uz', ve:'za', vec:'it', vi:'vn', war:'ph', cy:'gb', wo:'sn', xh:'za', sah:'ru', yi:'il', yo:'ng', yua:'mx', zap:'mx', zu:'za'
+    };
+
     function initLanguagePicker() {
         const launcher = document.getElementById('language-launcher');
         const panel = document.getElementById('language-panel');
         const closeButton = document.getElementById('language-panel-close');
         const search = document.getElementById('language-search-input');
+        const resetButton = document.getElementById('language-reset');
         if (!launcher || !panel || launcher.dataset.initialized === 'true') return;
 
         launcher.dataset.initialized = 'true';
@@ -361,6 +369,7 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
         panel.addEventListener('click', event => { if (event.target === panel) closePanel(); });
         document.addEventListener('keydown', event => { if (event.key === 'Escape' && panel.classList.contains('open')) closePanel(); });
         search?.addEventListener('input', () => filterLanguages(search.value));
+        resetButton?.addEventListener('click', resetLanguage);
     }
 
     function filterLanguages(query = '') {
@@ -376,6 +385,34 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
         if (count) count.textContent = `${visibleCount} language${visibleCount === 1 ? '' : 's'} available`;
     }
 
+    function resetLanguage() {
+        const source = document.querySelector('#google_translate_element .goog-te-combo');
+        const expired = 'expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; SameSite=Lax';
+        document.cookie = `googtrans=; ${expired}`;
+        document.cookie = `googtrans=; ${expired}; domain=.${location.hostname}`;
+
+        if (source && [...source.options].some(option => option.value === 'en')) {
+            source.value = 'en';
+            source.dispatchEvent(new Event('change'));
+        } else {
+            window.location.reload();
+            return;
+        }
+
+        const search = document.getElementById('language-search-input');
+        if (search) search.value = '';
+        filterLanguages();
+        updateLanguageSelection('en');
+        document.getElementById('language-panel-close')?.click();
+    }
+
+    function renderLanguageFlag(code) {
+        const country = LANGUAGE_COUNTRIES[code];
+        return country
+            ? `<img src="https://flagcdn.com/w40/${country}.png" srcset="https://flagcdn.com/w80/${country}.png 2x" width="20" height="15" loading="lazy" alt="">`
+            : '<i class="fa-solid fa-earth-americas" aria-hidden="true"></i>';
+    }
+
     function buildLanguageMenu(attempt = 0) {
         const source = document.querySelector('#google_translate_element .goog-te-combo');
         const grid = document.getElementById('language-grid');
@@ -387,7 +424,7 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
 
         const languages = [...source.options]
             .filter(option => option.value)
-            .map(option => ({ code: option.value, name: option.text.trim(), flag: LANGUAGE_FLAGS[option.value] || '🌐' }))
+            .map(option => ({ code: option.value, name: option.text.trim() }))
             .sort((a, b) => a.name.localeCompare(b.name));
 
         // Google creates the select first, then fills its language options
@@ -399,7 +436,7 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
 
         grid.innerHTML = languages.map(language => `
             <button class="language-option" type="button" role="listitem" data-language="${language.code}" data-search="${escapeHTML(`${language.name} ${language.code}`.toLocaleLowerCase())}">
-                <span class="language-flag" aria-hidden="true">${language.flag}</span><span>${escapeHTML(language.name)}</span>
+                <span class="language-flag">${renderLanguageFlag(language.code)}</span><span>${escapeHTML(language.name)}</span>
             </button>`).join('');
         grid.dataset.ready = 'true';
 

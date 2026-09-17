@@ -129,7 +129,7 @@ $seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/lo
     <link rel="stylesheet" href="../assets/css/variables.css">
     <?php include __DIR__ . '/../assets/php/site-theme.php'; ?>
     <link rel="stylesheet" href="../assets/css/base.css">
-    <link rel="stylesheet" href="../assets/css/navbar.css?v=3">
+    <link rel="stylesheet" href="../assets/css/navbar.css?v=4">
     <link rel="stylesheet" href="../assets/css/services.css">
     <link rel="stylesheet" href="../assets/css/services-page.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
@@ -399,7 +399,7 @@ $seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/lo
     <div id="footer-placeholder"></div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="../assets/js/components.js?v=12"></script>
+    <script src="../assets/js/components.js?v=13"></script>
     <script src="../assets/js/navbar.js"></script>
     <script src="../assets/js/animations.js"></script>
     <script src="../assets/js/main.js"></script>
