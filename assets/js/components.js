@@ -350,6 +350,24 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
         if (!launcher || !panel || launcher.dataset.initialized === 'true') return;
 
         launcher.dataset.initialized = 'true';
+        const syncPanelViewport = () => {
+            // Some mobile browsers initially expose a wider layout viewport than
+            // the visible screen. Constrain the fixed panel to the smallest
+            // available measurement, then resync on orientation/UI changes.
+            const widths = [
+                document.documentElement.clientWidth,
+                window.innerWidth,
+                window.visualViewport?.width,
+                window.screen?.width
+            ].filter(width => Number.isFinite(width) && width > 0);
+            if (widths.length) panel.style.setProperty('--language-panel-viewport-width', `${Math.floor(Math.min(...widths))}px`);
+        };
+
+        syncPanelViewport();
+        window.addEventListener('resize', syncPanelViewport, { passive: true });
+        window.addEventListener('orientationchange', syncPanelViewport, { passive: true });
+        window.visualViewport?.addEventListener('resize', syncPanelViewport, { passive: true });
+
         const closePanel = () => {
             panel.classList.remove('open');
             panel.setAttribute('aria-hidden', 'true');
@@ -359,6 +377,7 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
         };
 
         launcher.addEventListener('click', () => {
+            syncPanelViewport();
             panel.classList.add('open');
             panel.setAttribute('aria-hidden', 'false');
             launcher.setAttribute('aria-expanded', 'true');
