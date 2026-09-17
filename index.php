@@ -95,7 +95,7 @@ $seoSchemas = [
     <link rel="stylesheet" href="assets/css/variables.css?v=<?= $assetVersion ?>">
     <?php include __DIR__ . '/assets/php/site-theme.php'; ?>
     <link rel="stylesheet" href="assets/css/base.css?v=<?= $assetVersion ?>">
-    <link rel="stylesheet" href="assets/css/navbar.css?v=<?= $assetVersion ?>&translator=3">
+    <link rel="stylesheet" href="assets/css/navbar.css?v=<?= $assetVersion ?>&translator=5">
     <link rel="stylesheet" href="assets/css/hero.css?v=<?= $assetVersion ?>">
     <link rel="stylesheet" href="assets/css/about.css?v=<?= $assetVersion ?>">
     <link rel="stylesheet" href="assets/css/services.css?v=<?= $assetVersion ?>">
@@ -863,7 +863,7 @@ $seoSchemas = [
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="assets/js/components.js?v=13"></script>
+    <script src="assets/js/components.js?v=14"></script>
     <script src="assets/js/navbar.js"></script>
     <script src="assets/js/animations.js"></script>
     <script src="assets/js/main.js"></script>

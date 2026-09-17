@@ -413,6 +413,16 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
             : '<i class="fa-solid fa-earth-americas" aria-hidden="true"></i>';
     }
 
+    function getLanguageCountryName(code) {
+        const country = LANGUAGE_COUNTRIES[code];
+        if (!country || !window.Intl?.DisplayNames) return '';
+        try {
+            return new Intl.DisplayNames(['en'], { type: 'region' }).of(country.toUpperCase()) || '';
+        } catch (error) {
+            return '';
+        }
+    }
+
     function buildLanguageMenu(attempt = 0) {
         const source = document.querySelector('#google_translate_element .goog-te-combo');
         const grid = document.getElementById('language-grid');
@@ -424,7 +434,11 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
 
         const languages = [...source.options]
             .filter(option => option.value)
-            .map(option => ({ code: option.value, name: option.text.trim() }))
+            .map(option => ({
+                code: option.value,
+                name: option.text.trim(),
+                country: getLanguageCountryName(option.value)
+            }))
             .sort((a, b) => a.name.localeCompare(b.name));
 
         // Google creates the select first, then fills its language options
@@ -435,7 +449,7 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
         }
 
         grid.innerHTML = languages.map(language => `
-            <button class="language-option" type="button" role="listitem" data-language="${language.code}" data-search="${escapeHTML(`${language.name} ${language.code}`.toLocaleLowerCase())}">
+            <button class="language-option" type="button" role="listitem" data-language="${language.code}" data-search="${escapeHTML(`${language.name} ${language.code} ${language.country}`.toLocaleLowerCase())}">
                 <span class="language-flag">${renderLanguageFlag(language.code)}</span><span>${escapeHTML(language.name)}</span>
             </button>`).join('');
         grid.dataset.ready = 'true';

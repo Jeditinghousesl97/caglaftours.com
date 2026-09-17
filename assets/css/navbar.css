@@ -247,10 +247,13 @@
     position: fixed;
     inset: 0;
     z-index: 10050;
-    display: grid;
+    display: block;
     visibility: hidden;
     opacity: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     background: rgba(1, 14, 37, 0.78);
     backdrop-filter: blur(12px);
     transition: opacity 0.25s ease, visibility 0.25s ease;
@@ -262,7 +265,7 @@
     display: flex;
     flex-direction: column;
     width: min(100%, 1440px);
-    height: 100%;
+    min-height: 100dvh;
     margin: 0 auto;
     padding: clamp(28px, 5vw, 68px) clamp(24px, 6vw, 96px) 30px;
     background:
@@ -369,15 +372,11 @@
 .language-reset:hover { background: rgba(0, 180, 216, 0.22); }
 
 .language-grid {
-    flex: 1 1 auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     align-content: start;
     gap: 10px;
-    min-height: 0;
     padding: 3px 8px 22px 3px;
-    overflow-y: auto;
-    scrollbar-color: rgba(255,255,255,0.35) transparent;
 }
 
 .language-option {
@@ -429,8 +428,8 @@ body {
 }
 
 @media (max-width: 767px) {
-    #language-launcher { left: 50%; right: auto; bottom: max(18px, env(safe-area-inset-bottom)); min-width: 68px; height: 43px; padding: 0 12px; transform: translateX(-50%); z-index: 10020; }
-    #language-launcher:hover { transform: translateX(-50%) translateY(-3px); }
+    #language-launcher { top: calc(var(--nav-height) + 12px); right: auto; bottom: auto; left: max(16px, env(safe-area-inset-left)); min-width: 68px; height: 43px; padding: 0 12px; transform: none; z-index: 10020; }
+    #language-launcher:hover { transform: translateY(-3px); }
     .language-panel-content { padding: 26px 18px 18px; }
     .language-panel-header { margin-bottom: 22px; }
     .language-panel-header h2 { margin-top: 8px; font-size: 2rem; }
