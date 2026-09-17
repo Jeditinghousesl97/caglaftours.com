@@ -241,6 +241,20 @@
 }
 
 #language-launcher i { color: var(--accent); font-size: 1rem; }
+.language-launcher-flag {
+    display: inline-grid;
+    width: 22px;
+    height: 17px;
+    flex: 0 0 22px;
+    place-items: center;
+}
+.language-launcher-flag img {
+    width: 22px;
+    height: 16px;
+    object-fit: cover;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
 #language-launcher.translation-unavailable { display: none; }
 
 .language-panel {
@@ -250,10 +264,7 @@
     display: block;
     visibility: hidden;
     opacity: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     background: rgba(1, 14, 37, 0.78);
     backdrop-filter: blur(12px);
     transition: opacity 0.25s ease, visibility 0.25s ease;
@@ -265,9 +276,13 @@
     display: flex;
     flex-direction: column;
     width: min(100%, 1440px);
-    min-height: 100dvh;
+    height: 100%;
+    min-height: 0;
     margin: 0 auto;
     padding: clamp(28px, 5vw, 68px) clamp(24px, 6vw, 96px) 30px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     background:
         radial-gradient(circle at 90% 0%, rgba(0, 180, 216, 0.17), transparent 28rem),
         linear-gradient(135deg, #021b3d 0%, #042b58 48%, #052446 100%);
@@ -430,14 +445,18 @@ body {
 @media (max-width: 767px) {
     #language-launcher { top: calc(var(--nav-height) + 12px); right: auto; bottom: auto; left: max(16px, env(safe-area-inset-left)); min-width: 68px; height: 43px; padding: 0 12px; transform: none; z-index: 10020; }
     #language-launcher:hover { transform: translateY(-3px); }
-    .language-panel-content { padding: 26px 18px 18px; }
+    /* Reserve room for mobile browser UI/scrollbars so the second column is never clipped. */
+    .language-panel-content { width: 100%; max-width: 100%; padding: 26px 50px calc(18px + env(safe-area-inset-bottom)) 18px; }
+    .language-panel-header > div,
+    .language-search,
+    .language-grid { min-width: 0; max-width: 100%; }
     .language-panel-header { margin-bottom: 22px; }
     .language-panel-header h2 { margin-top: 8px; font-size: 2rem; }
     .language-panel-header p { font-size: 0.82rem; }
     .language-panel-close { width: 42px; height: 42px; }
     .language-search input { height: 50px; }
-    .language-results-bar { margin-top: 17px; font-size: 0.66rem; }
-    .language-results-bar > div { gap: 8px; }
+    .language-results-bar { align-items: flex-start; flex-direction: column; gap: 8px; margin-top: 17px; font-size: 0.66rem; }
+    .language-results-bar > div { flex-wrap: wrap; gap: 8px; }
     .language-reset { padding: 6px 8px; font-size: 0.62rem; }
     .language-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding-right: 2px; }
     .language-option { gap: 8px; padding: 12px 10px; font-size: 0.78rem; }

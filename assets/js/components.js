@@ -263,7 +263,7 @@
 
         const html = `
 <button id="language-launcher" class="notranslate" translate="no" aria-label="Choose website language" aria-controls="language-panel" aria-expanded="false">
-    <i class="fa-solid fa-globe" aria-hidden="true"></i><span id="language-current-code">EN</span>
+    <span id="language-current-flag" class="language-launcher-flag" aria-hidden="true">${renderLanguageFlag('en')}</span><span id="language-current-code">EN</span>
 </button>
 ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>` : ''}
 <button id="float-top" aria-label="Back to top" title="Back to top"><i class="fa fa-chevron-up"></i></button>
@@ -470,8 +470,11 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
     }
 
     function updateLanguageSelection(code) {
-        document.getElementById('language-current-code').textContent = code === 'en' ? 'EN' : code.split('-')[0].toUpperCase();
-        document.querySelectorAll('.language-option').forEach(option => option.classList.toggle('selected', option.dataset.language === code));
+        const normalizedCode = code || 'en';
+        const flag = document.getElementById('language-current-flag');
+        if (flag) flag.innerHTML = renderLanguageFlag(normalizedCode);
+        document.getElementById('language-current-code').textContent = normalizedCode === 'en' ? 'EN' : normalizedCode.split('-')[0].toUpperCase();
+        document.querySelectorAll('.language-option').forEach(option => option.classList.toggle('selected', option.dataset.language === normalizedCode));
     }
 
     /**
