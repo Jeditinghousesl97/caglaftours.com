@@ -325,6 +325,9 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
         });
 
         initLanguagePicker();
+        // The Google widget's source element is part of this floating UI, so
+        // initialise it only after the panel has been added to the document.
+        initGoogleTranslate();
     }
 
     const LANGUAGE_FLAGS = {

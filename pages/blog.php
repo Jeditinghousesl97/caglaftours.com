@@ -411,7 +411,7 @@ $seoImage = $cfg('seo_image', '') ?: ($cfg('site_logo', '') ?: 'assets/images/lo
     <div id="footer-placeholder"></div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="../assets/js/components.js?v=10"></script>
+    <script src="../assets/js/components.js?v=11"></script>
     <script src="../assets/js/navbar.js"></script>
     <script src="../assets/js/animations.js"></script>
     <script src="../assets/js/main.js"></script>
