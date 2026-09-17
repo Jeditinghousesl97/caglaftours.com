@@ -552,7 +552,7 @@ if (!empty($itineraryItems)) {
 
     <!-- AOS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="../assets/js/components.js?v=11"></script>
+    <script src="../assets/js/components.js?v=12"></script>
     <script src="../assets/js/navbar.js"></script>
     <script src="../assets/js/animations.js"></script>
     <script src="../assets/js/main.js"></script>

@@ -390,6 +390,13 @@ ${waNum ? `<a id="float-wa" href="https://wa.me/${waNum}" target="_blank" rel="n
             .map(option => ({ code: option.value, name: option.text.trim(), flag: LANGUAGE_FLAGS[option.value] || '🌐' }))
             .sort((a, b) => a.name.localeCompare(b.name));
 
+        // Google creates the select first, then fills its language options
+        // asynchronously. Do not treat that initial empty select as ready.
+        if (!languages.length) {
+            if (attempt < 100) window.setTimeout(() => buildLanguageMenu(attempt + 1), 100);
+            return;
+        }
+
         grid.innerHTML = languages.map(language => `
             <button class="language-option" type="button" role="listitem" data-language="${language.code}" data-search="${escapeHTML(`${language.name} ${language.code}`.toLocaleLowerCase())}">
                 <span class="language-flag" aria-hidden="true">${language.flag}</span><span>${escapeHTML(language.name)}</span>
